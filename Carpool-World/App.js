@@ -3,17 +3,23 @@ import { Button, View, Text, TextInput } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+var userInfo = {user: "", pass: "", name: ""};
+
 class HomeScreen extends React.Component {
   // function to check user name and password
+  // current username is user, password is 123
   checkUser = () => {
-    var user = document.getElementById('username').value;
-    var pass = document.getElementById('password').value;
+    userInfo.user = document.getElementById('username').value;
+    userInfo.pass = document.getElementById('password').value;
+    userInfo.name = "Kambing";
 
-    if (user == 'user' && pass == '123') {
+    if (userInfo.user == 'user' && userInfo.pass == '123') {
       this.props.navigation.navigate('LoggedIn');
+      document.getElementById('logInSpace').style.display = "none";
+      document.getElementById('welcomeMsg').innerHTML = "Welcome back, " + userInfo.name;
     }
     else {
-      alert(user + " " + pass + "\nWrong username/password");
+      alert(userInfo.user + " " + userInfo.pass + "\nWrong username/password");
     }
   }
 
@@ -21,14 +27,18 @@ class HomeScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TextInput id="username" placeholder="Username"/>
-        <TextInput id="password" placeholder="Password"/>
-        <Text> </Text>
-        <Button
-          title="Log In"
-          onPress={this.checkUser
-          }
-        />
+        <div id='logInSpace'>
+          <div>
+            <TextInput id='username' placeholder="Username"/>
+            <TextInput style={{visibility: 'hidden'}} size='1'/>
+            <TextInput id='password' secureTextEntry={true} placeholder="Password"/>
+          </div>
+          <Text> </Text>
+          <div>
+            <Button title="Log In" onPress={ this.checkUser }/>
+          </div>
+        </div>
+        <Text id='welcomeMsg'/>
       </View>
     );
   }
@@ -38,7 +48,7 @@ class LoggedInScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>After Logging In</Text>
+        <Text>This is a new page</Text>
       </View>
     );
   }
