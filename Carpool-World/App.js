@@ -16,11 +16,24 @@ class HomeScreen extends React.Component {
     if (userInfo.user == 'user' && userInfo.pass == '123') {
       this.props.navigation.navigate('LoggedIn');
       document.getElementById('logInSpace').style.display = "none";
-      document.getElementById('welcomeMsg').innerHTML = "Welcome back, " + userInfo.name;
+      document.getElementById('afterLogIn').style.display = "block";
+      document.getElementById('welcomeMsg').innerHTML = "Welcome back, " + userInfo.name + "\n\n";
     }
     else {
       alert(userInfo.user + " " + userInfo.pass + "\nWrong username/password");
     }
+  }
+
+  // function to log user out and clear username and password
+  logOutUser = () => {
+    userInfo.user = "";
+    userInfo.pass = "";
+    userInfo.name = "";
+
+    document.getElementById('username').value = "";
+    document.getElementById('password').value = "";
+    document.getElementById('logInSpace').style.display = "block";
+    document.getElementById('afterLogIn').style.display = "none";
   }
 
   render() {
@@ -38,7 +51,10 @@ class HomeScreen extends React.Component {
             <Button title="Log In" onPress={ this.checkUser }/>
           </div>
         </div>
-        <Text id='welcomeMsg'/>
+        <div id='afterLogIn' style={{display: 'none'}}>
+          <Text id='welcomeMsg'/>
+          <Button title="Log Out" onPress={ this.logOutUser }/>
+        </div>
       </View>
     );
   }
