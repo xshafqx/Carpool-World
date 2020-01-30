@@ -37,11 +37,6 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
-
-    document.getElementById('homeButton').disabled = true;
-    document.getElementById('bookButton').disabled = false;
-    document.getElementById('msgsButton').disabled = false;
-    document.getElementById('acctButton').disabled = false;
   }
 
   // bookings page button
@@ -51,11 +46,6 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "block";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
-
-    document.getElementById('homeButton').disabled = false;
-    document.getElementById('bookButton').disabled = true;
-    document.getElementById('msgsButton').disabled = false;
-    document.getElementById('acctButton').disabled = false;
   }
 
   // messages page button
@@ -65,11 +55,6 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "block";
     document.getElementById('acctPage').style.display = "none";
-
-    document.getElementById('homeButton').disabled = false;
-    document.getElementById('bookButton').disabled = false;
-    document.getElementById('msgsButton').disabled = true;
-    document.getElementById('acctButton').disabled = false;
   }
 
   // account page button
@@ -79,11 +64,6 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
-
-    document.getElementById('homeButton').disabled = false;
-    document.getElementById('bookButton').disabled = false;
-    document.getElementById('msgsButton').disabled = false;
-    document.getElementById('acctButton').disabled = true;
   }
 
   // function to log user out and clear username and password
