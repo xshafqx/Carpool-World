@@ -64,6 +64,7 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
+    document.getElementById('userProfile').innerHTML = "\n\nName: " + userInfo.name + "\nUsername: " + userInfo.user + "\nPassword: " + userInfo.pass;
   }
 
   // function to log user out and clear username and password
@@ -100,9 +101,10 @@ class MainScreen extends React.Component {
         </div>
 
         <div id='homePage' style={{display: 'none'}}>
-          <Text id='welcomeMsg'></Text>
-          <Text>This is the home page</Text>
-          <Text> </Text>
+          <p>
+            <Text id='welcomeMsg'></Text>
+            <Text>This is the home page</Text>
+          </p>
           <div style={{display: 'block'}}>
             <Button id='homeButton' title="Home" onPress={ this.homePageButton }/>
             <Button id='bookButton' title="Book" onPress={ this.bookPageButton }/>
@@ -112,7 +114,9 @@ class MainScreen extends React.Component {
         </div>
 
         <div id='bookPage' style={{display: 'none'}}>
-          <Text>This is the booking page</Text>
+          <p>
+            <Text>This is the booking page</Text>
+          </p>
           <div>
             <Button id='homeButton' title="Home" onPress={ this.homePageButton }/>
             <Button id='bookButton' title="Book" onPress={ this.bookPageButton }/>
@@ -122,7 +126,9 @@ class MainScreen extends React.Component {
         </div>
 
         <div id='msgsPage' style={{display: 'none'}}>
-          <Text>This is the messages page</Text>
+          <p>
+            <Text>This is the messages page</Text>
+          </p>
           <div>
             <Button id='homeButton' title="Home" onPress={ this.homePageButton }/>
             <Button id='bookButton' title="Book" onPress={ this.bookPageButton }/>
@@ -132,8 +138,12 @@ class MainScreen extends React.Component {
         </div>
 
         <div id='acctPage' style={{display: 'none'}}>
-          <Text>This is the account page</Text>
-          <Button id='logOutButton' title="Log Out" onPress={ this.logOutUser }/>
+          <p>
+            <Text>This is the account page</Text>
+            <Text id='userProfile'></Text>
+            <br/><br/>
+            <Button id='logOutButton' title="Log Out" onPress={ this.logOutUser }/>
+          </p>
           <div>
             <Button id='homeButton' title="Home" onPress={ this.homePageButton }/>
             <Button id='bookButton' title="Book" onPress={ this.bookPageButton }/>
