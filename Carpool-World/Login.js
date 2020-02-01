@@ -29,6 +29,8 @@ class Login extends Component {
         console.log(error);
         alert("Wrong E-Mail/Password")
     });
+
+    
   }
 
   signup(e) {
