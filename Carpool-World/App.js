@@ -23,7 +23,9 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         localStorage.setItem('user', user.uid);
-      } else {
+      }
+
+      else {
         this.setState({ user: null });
         localStorage.removeItem('user');
       }
@@ -33,12 +35,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.user ? (
-          <Home />
-        ) :
-          (
-            <Login />
-          )}
+        {this.state.user ? (<Home />) : (<Login />)}
       </div>
     );
   }

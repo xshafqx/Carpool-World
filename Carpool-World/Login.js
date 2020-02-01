@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
@@ -36,13 +37,13 @@ class Login extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div>
           <form>
             <div>
-              <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail" />
+              <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@here.com)" />
               &nbsp;&nbsp;&nbsp;
-              <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+              <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (pass06)" />
             </div>
             <br/>
             <button type="submit" onClick={this.login}>Sign In</button>
