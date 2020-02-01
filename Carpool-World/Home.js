@@ -17,7 +17,6 @@ class Home extends Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div>
           <h1>Welcome Home</h1>
-          <br/>
           <button onClick={this.logout}>Logout</button>
         </div>
       </View>
