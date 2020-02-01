@@ -36,18 +36,20 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <form>
-          <div>
-            <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail" />
-            &nbsp;&nbsp;&nbsp;
-            <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
-          </div>
-          <br/>
-          <button type="submit" onClick={this.login}>Sign In</button>
-          <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success">Sign Up</button>
-        </form>
-      </div>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <div>
+          <form>
+            <div>
+              <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Mail" />
+              &nbsp;&nbsp;&nbsp;
+              <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+            </div>
+            <br/>
+            <button type="submit" onClick={this.login}>Sign In</button>
+            <button onClick={this.signup} style={{marginLeft: '25px'}} className="btn btn-success">Sign Up</button>
+          </form>
+        </div>
+      </View>
     );
   }
 }
