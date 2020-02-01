@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, View, Text, TextInput } from 'react-native';
+import { withRouter } from 'react-router-dom';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import firebase from 'firebase';
@@ -11,17 +12,15 @@ class MainScreen extends React.Component {
 
   ///// f u n c t i o n s /////
 
-  // function to check user name and password
-  // current username is user, password is 123
+  // function to check email and password
   checkUser = () => {
-    userInfo.user = document.getElementById('username').value;
+    userInfo.user = document.getElementById('email').value;
     userInfo.pass = document.getElementById('password').value;
 
     {this.state.accounts.map((account) => {
-      if (userInfo.user === this.state.account.username && userInfo.pass === this.state.account.password) {
+      if (userInfo.email === this.state.account.email && userInfo.pass === this.state.account.password) {
         userInfo.fname = this.state.account.firstName;
         userInfo.lname = this.state.account.lastName;
-        userInfo.email = this.state.account.email;
 
         document.getElementById('signInSpace').style.display = "none";
         document.getElementById('homePage').style.display = "block";
@@ -31,7 +30,7 @@ class MainScreen extends React.Component {
         document.getElementById('welcomeMsg').innerHTML = "Welcome back, " + userInfo.fname + "\n\n";
       }
       else {
-        alert(userInfo.user + " " + userInfo.pass + "\nWrong username/password");
+        alert(userInfo.user + " " + userInfo.pass + "\nWrong email/password");
       }
     })}
   }
@@ -70,10 +69,10 @@ class MainScreen extends React.Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
-    document.getElementById('userProfile').innerHTML = "\n\nName: " + userInfo.name + "\nUsername: " + userInfo.user + "\nPassword: " + userInfo.pass;
+    document.getElementById('userProfile').innerHTML = "\n\nName: " + userInfo.fname + "\nEmail: " + userInfo.email + "\nPassword: " + userInfo.pass;
   }
 
-  // function to sign user out and clear username and password
+  // function to sign user out and clear email and password
   signOutUser = () => {
     userInfo.user = "";
     userInfo.pass = "";
@@ -81,7 +80,7 @@ class MainScreen extends React.Component {
     userInfo.lname = "";
     userInfo.email = "";
 
-    document.getElementById('username').value = "";
+    document.getElementById('email').value = "";
     document.getElementById('password').value = "";
     document.getElementById('signInSpace').style.display = "block";
     document.getElementById('homePage').style.display = "none";
@@ -120,7 +119,6 @@ class MainScreen extends React.Component {
       for (let account in accounts) {
         newState.push({
           id: account,
-          username: accounts[account].uname,
           firstName: accounts[account].fname,
           lastName: accounts[account].lname,
           email: accounts[account].email,
@@ -148,7 +146,7 @@ class MainScreen extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <div id='signInSpace'>
           <div>
-            <TextInput id='username' placeholder="Username"/>
+            <TextInput id='email' placeholder="Email"/>
             <TextInput style={{visibility: 'hidden'}} size='1'/>
             <TextInput id='password' secureTextEntry={true} placeholder="Password"/>
           </div>
@@ -229,14 +227,32 @@ class SignUpScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: '',
       firstName: '',
       lastName: '',
       email: '',
       password: '',
-      accounts: []
-    }
-    this.handleChange = this.handleChange.bind(this);
+      error: null
+    };
+
+    handleInputChange = (event) => {
+     this.setState({ [event.target.name]: event.target.value });
+   };
+
+  handleSubmit = (event) => {
+     event.preventDefault();
+     const { firstName, lastName, email, password } = this.state;
+  firebase
+       .auth()
+       .createUserWithEmailAndPassword(email, password)
+       .then((user) => {
+         this.props.history.push('/');
+       })
+       .catch((error) => {
+         this.setState({ error: error });
+       });
+   };
+
+    /*this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -248,7 +264,6 @@ class SignUpScreen extends React.Component {
       for (let account in accounts) {
         newState.push({
           id: account,
-          username: accounts[account].uname,
           firstName: accounts[account].fname,
           lastName: accounts[account].lname,
           email: accounts[account].email,
@@ -277,37 +292,52 @@ class SignUpScreen extends React.Component {
     else {
       const accountsRef = fire.database().ref('accounts');
       const account = {
-        uname: this.username.value,
         fname: this.firstName.value,
         lname: this.lastName.value,
         email: this.email.value,
         passw: this.password.value
       }
       accountsRef.push(account);
-        this.username.value = '';
         this.firstName.value = '';
         this.lastName.value = '';
         this.email.value = '';
         this.password.value = '';
         this.conPassword.value = '';
-    }
+    }*/
   }
 
   render() {
+    const { firstName, lastName, email, password, error } = this.state;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <p>
-          <Text>Sign Up Form</Text>
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" placeholder="Username" onChange={this.handleChange} ref={username => this.username = username} /><br/>
-            <input type="text" placeholder="First Name" onChange={this.handleChange} ref={firstName => this.firstName = firstName} /><br/>
-            <input type="text" placeholder="Last Name" onChange={this.handleChange} ref={lastName => this.lastName = lastName} /><br/>
-            <input type="text" placeholder="E-Mail" onChange={this.handleChange} ref={email => this.email = email} /><br/>
-            <input type="password" placeholder="Password" onChange={this.handleChange} ref={password => this.password = password} /><br/>
-            <input type="password" placeholder="Confirm Password" onChange={this.handleChange} ref={conPassword => this.conPassword = conPassword}/><br/>
-            <input type="submit"/>
-          </form>
-        </p>
+      <Container>
+        <Flex>
+          <Box>
+            <h1>Registration</h1>
+          </Box>
+        </Flex>
+
+        {error ? (
+           <Flex>
+             <Box>
+               <Text>{error.message}</Text>
+             </Box>
+           </Flex>
+         ) : null}
+
+         <Flex>
+           <Box>
+             <form onSubmit={this.handleSubmit}>
+               <input type="text" placeholder="First Name" onChange={this.handleInputChange} ref={firstName => this.firstName = firstName} /><br/>
+               <input type="text" placeholder="Last Name" onChange={this.handleInputChange} ref={lastName => this.lastName = lastName} /><br/>
+               <input type="text" placeholder="E-Mail" onChange={this.handleInputChange} ref={email => this.email = email} /><br/>
+               <input type="password" placeholder="Password" onChange={this.handleInputChange} ref={password => this.password = password} /><br/>
+               <input type="password" placeholder="Confirm Password" onChange={this.handleInputChange} ref={conPassword => this.conPassword = conPassword}/><br/>
+               <input type="submit"/>
+             </form>
+           </Box>
+         </Flex>
+      </Container>
       </View>
     );
   }
