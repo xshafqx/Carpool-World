@@ -3,6 +3,14 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
+const user = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  repassword: ''
+}
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +38,7 @@ class Login extends Component {
         alert("Wrong E-Mail/Password")
     });
 
-    
+
   }
 
   signup(e) {
@@ -124,4 +132,5 @@ class Login extends Component {
     );
   }
 }
+
 export default Login;

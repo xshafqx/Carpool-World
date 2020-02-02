@@ -42,21 +42,62 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
-    document.getElementById('userProfile').innerHTML = "\n\nName: " + userInfo.name + "\nUsername: " + userInfo.user + "\nPassword: " + userInfo.pass;
   }
 
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <div id='homePage'>
         <div>
-          <h1>Welcome Home, </h1>
-          <button onClick={this.logout}>Logout</button>
+          <h1>Welcome Home, xxx</h1>
         </div>
         <div>
-
-
+           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
         </div>
-      </View>
+      </div>
+
+      <div id='bookPage' style={{display: 'none'}}>
+      <div>
+        <h1>This is the booking tab</h1>
+      </div>
+      <div>
+        <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+        <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+        <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+        <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+      </div>
+     </div>
+
+     <div id='msgsPage' style={{display: 'none'}}>
+       <div>
+         <h1>This is the messages tab</h1>
+       </div>
+       <div>
+         <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+         <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+         <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+         <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+       </div>
+     </div>
+
+     <div id='acctPage' style={{display: 'none'}}>
+       <div>
+         <h1>This is the account tab</h1>
+         <button onClick={this.logout}>Logout</button>
+         <br/>
+         <br/>
+       </div>
+       <div>
+         <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+         <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+         <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+         <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+       </div>
+     </div>
+   </View>
     );
   }
 }
