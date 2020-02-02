@@ -25,3 +25,24 @@ Final Year Project
 - schedule weekly pick-ups
 - cancel ride
 - balance low reminder
+
+
+<b><u>TO WORK ON PROJECT...</u></b>
+- install react -> you have to install a lot of plug ins and shit i dont even remember anymore
+- install github
+- collab this proj
+- go onto node.js terminal
+  - cd (directory of the project folder)
+    - for eg. mine is cd d:/GitHub/Carpool World/Carpool-World/Carpool-World
+  - (enter your drive)
+    - for eg mine is d:
+  - npm start
+- on github create a branch of the project
+- open your editor of choice and pull whichever file you want to edit into the editor
+- start editing
+- save
+- commit changes to github
+- if your branch is stable, create pull request
+- combine the proj
+- test if everything works again
+- rinse and repeat
