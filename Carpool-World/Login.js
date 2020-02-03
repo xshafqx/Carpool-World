@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import fire from './base';
 
 const user = {
+  id: '',
   firstName: '',
   lastName: '',
-  email: '',
-  password: '',
-  repassword: ''
+  email: 'hais',
+  password: ''
 }
 
 class Login extends Component {
@@ -22,7 +22,8 @@ class Login extends Component {
       lastName: '',
       email: '',
       password: '',
-      repassword: ''
+      repassword: '',
+      accounts: []
     };
   }
 
@@ -34,11 +35,9 @@ class Login extends Component {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
     }).catch((error) => {
-        console.log(error);
-        alert("Wrong E-Mail/Password")
-    });
-
-
+          alert("Wrong E-Mail/Password")
+      })
+      console.log(user.email);
   }
 
   signup(e) {
@@ -51,6 +50,7 @@ class Login extends Component {
       fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
       }).then((u)=>{console.log(u)})
       .catch((error) => {
+          user.email = this.state.email;
           console.log(error);
           alert("Ono, something went wrong!\nPlease try again")
       })
@@ -83,6 +83,19 @@ class Login extends Component {
     e.preventDefault();
     document.getElementById("signinblock").style.display = "block";
     document.getElementById("signupblock").style.display = "none";
+  }
+
+  componentDidMount() {
+  const accountsRef = fire.database().ref('accounts');
+  accountsRef.orderByChild('email')
+    .equalTo("test@es.com")
+    .once('value')
+    .then(function (snapshot) {
+      var accounts = snapshot.val();
+      var id = accounts.id;
+      user.email = accounts.toString('email');
+      console.log(accounts);
+    })
   }
 
   render() {

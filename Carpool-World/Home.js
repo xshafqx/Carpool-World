@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import fire from './base';
 
+const user = {
+  email: "here"
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +53,7 @@ class Home extends Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>Welcome Home, xxx</h1>
+          <h1>{"Welcome Home, " }</h1>
         </div>
         <div>
            <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
@@ -60,44 +64,44 @@ class Home extends Component {
       </div>
 
       <div id='bookPage' style={{display: 'none'}}>
-      <div>
-        <h1>This is the booking tab</h1>
-      </div>
-      <div>
-        <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-        <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-        <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-        <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
-      </div>
-     </div>
+        <div>
+          <h1>This is the booking tab</h1>
+        </div>
+        <div>
+          <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+          <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+          <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+          <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+        </div>
+       </div>
 
-     <div id='msgsPage' style={{display: 'none'}}>
-       <div>
-         <h1>This is the messages tab</h1>
+       <div id='msgsPage' style={{display: 'none'}}>
+         <div>
+           <h1>This is the messages tab</h1>
+         </div>
+         <div>
+           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+         </div>
        </div>
-       <div>
-         <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-         <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-         <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-         <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
-       </div>
-     </div>
 
-     <div id='acctPage' style={{display: 'none'}}>
-       <div>
-         <h1>This is the account tab</h1>
-         <button onClick={this.logout}>Logout</button>
-         <br/>
-         <br/>
+       <div id='acctPage' style={{display: 'none'}}>
+         <div>
+           <h1>This is the account tab</h1>
+           <button onClick={this.logout}>Logout</button>
+           <br/>
+           <br/>
+         </div>
+         <div>
+           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+         </div>
        </div>
-       <div>
-         <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-         <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-         <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-         <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
-       </div>
-     </div>
-   </View>
+     </View>
     );
   }
 }
