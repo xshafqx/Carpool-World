@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import fire from './base';
-
-const user = {
-  email: "here"
-}
+import user from './Login';
 
 class Home extends Component {
   constructor(props) {
@@ -13,8 +10,25 @@ class Home extends Component {
   }
 
   logout() {
+    console.log(user.email);
     fire.auth().signOut();
   }
+
+/*  componentDidMount() {
+  const accountsRef = fire.database().ref('accounts');
+  accountsRef.orderByChild('email')
+    .equalTo(user.email)
+    .once('value')
+    .then(function (snapshot) {
+      snapshot.forEach(function(child) {
+        user.id = child.key;
+        user.firstName = child.val().fname;
+        user.lastName = child.val().lname;
+        user.password = child.val().passw;
+        console.log(child.key, child.val().email);
+      });
+    })
+  }*/
 
   // home page button
   homePageButton = () => {

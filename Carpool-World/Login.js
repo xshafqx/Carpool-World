@@ -7,7 +7,7 @@ const user = {
   id: '',
   firstName: '',
   lastName: '',
-  email: 'hais',
+  email: '',
   password: ''
 }
 
@@ -37,6 +37,8 @@ class Login extends Component {
     }).catch((error) => {
           alert("Wrong E-Mail/Password")
       })
+      user.email = this.state.email;
+
       console.log(user.email);
   }
 
@@ -50,8 +52,6 @@ class Login extends Component {
       fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
       }).then((u)=>{console.log(u)})
       .catch((error) => {
-          user.email = this.state.email;
-          console.log(error);
           alert("Ono, something went wrong!\nPlease try again")
       })
 
@@ -88,13 +88,12 @@ class Login extends Component {
   componentDidMount() {
   const accountsRef = fire.database().ref('accounts');
   accountsRef.orderByChild('email')
-    .equalTo("test@es.com")
+    .equalTo(this.state.email)
     .once('value')
     .then(function (snapshot) {
-      var accounts = snapshot.val();
-      var id = accounts.id;
-      user.email = accounts.toString('email');
-      console.log(accounts);
+      snapshot.forEach(function(child) {
+        console.log(child.key, child.val().email);
+      });
     })
   }
 
