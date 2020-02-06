@@ -3,13 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
-const user = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: ''
-}
+var email;
 
 class Login extends Component {
   constructor(props) {
@@ -37,9 +31,18 @@ class Login extends Component {
     }).catch((error) => {
           alert("Wrong E-Mail/Password")
       })
-      user.email = this.state.email;
 
-      console.log(user.email);
+      email = this.state.email;
+
+      const accountsRef = fire.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(this.state.email)
+        .once('value')
+        .then(function (snapshot) {
+          snapshot.forEach(function(child) {
+            console.log(child.val().fname, child.val().email);
+          });
+        })
   }
 
   signup(e) {
@@ -85,16 +88,8 @@ class Login extends Component {
     document.getElementById("signupblock").style.display = "none";
   }
 
-  componentDidMount() {
-  const accountsRef = fire.database().ref('accounts');
-  accountsRef.orderByChild('email')
-    .equalTo(this.state.email)
-    .once('value')
-    .then(function (snapshot) {
-      snapshot.forEach(function(child) {
-        console.log(child.key, child.val().email);
-      });
-    })
+  test(email) {
+    return email;
   }
 
   render() {
@@ -146,3 +141,4 @@ class Login extends Component {
 }
 
 export default Login;
+export { email }

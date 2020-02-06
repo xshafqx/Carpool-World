@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import fire from './base';
-import user from './Login';
+import {email} from './Login';
 
 class Home extends Component {
   constructor(props) {
@@ -10,25 +10,14 @@ class Home extends Component {
   }
 
   logout() {
-    console.log(user.email);
+    //var email = require('./Login.js');
+    console.log(email);
     fire.auth().signOut();
   }
 
-/*  componentDidMount() {
-  const accountsRef = fire.database().ref('accounts');
-  accountsRef.orderByChild('email')
-    .equalTo(user.email)
-    .once('value')
-    .then(function (snapshot) {
-      snapshot.forEach(function(child) {
-        user.id = child.key;
-        user.firstName = child.val().fname;
-        user.lastName = child.val().lname;
-        user.password = child.val().passw;
-        console.log(child.key, child.val().email);
-      });
-    })
-  }*/
+componentDidMount() {
+
+  }
 
   // home page button
   homePageButton = () => {
@@ -44,6 +33,16 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "block";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
+
+    const accountsRef = fire.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(email)
+      .once('value')
+      .then(function (snapshot) {
+        snapshot.forEach(function(child) {
+          console.log(child.key, child.val().email);
+        });
+      })
   }
 
   // messages page button
