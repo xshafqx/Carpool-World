@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import fire from './base';
-import {email, fname, lname, passw} from './Login';
+import {user} from './Login';
 
 class Home extends Component {
   constructor(props) {
@@ -10,7 +10,12 @@ class Home extends Component {
   }
 
   logout() {
-    console.log(email);
+    user[0] = '';
+    user[1] = '';
+    user[2] = '';
+    user[3] = '';
+
+    console.log(user.email);
     fire.auth().signOut();
   }
 
@@ -55,7 +60,7 @@ class Home extends Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>{"Welcome Home, " + fname}</h1>
+          <h1>{"Welcome Home, " + user[0] + " " + user[1] + " " + user[2] + " " + user[3]}</h1>
         </div>
         <div>
            <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>

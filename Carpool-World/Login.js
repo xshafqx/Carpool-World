@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
-var email, fname, lname, passw;
+var user = new Array(4);
 
 class Login extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Login extends Component {
           alert("Wrong E-Mail/Password")
       })
 
-      email = this.state.email;
+      user[2] = this.state.email;
 
       const accountsRef = fire.database().ref('accounts');
       accountsRef.orderByChild('email')
@@ -40,9 +40,9 @@ class Login extends Component {
         .once('value')
         .then(function (snapshot) {
           snapshot.forEach(function(child) {
-            fname = child.val().fname;
-            lname = child.val().lname;
-            passw = child.val().passw;
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[3] = child.val().passw;
             console.log(child.val().fname, child.val().email);
           });
         })
@@ -144,4 +144,4 @@ class Login extends Component {
 }
 
 export default Login;
-export { email, fname, lname, passw }
+export { user }
