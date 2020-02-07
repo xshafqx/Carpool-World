@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
-var user = new Array(4);
+var user = new Array(7); //fname, lname, email, passw, isDriver, isAdmin, id
 
 class Login extends Component {
   constructor(props) {
@@ -16,8 +16,7 @@ class Login extends Component {
       lastName: '',
       email: '',
       password: '',
-      repassword: '',
-      accounts: []
+      repassword: ''
     };
   }
 
@@ -43,6 +42,9 @@ class Login extends Component {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
             user[3] = child.val().passw;
+            user[4] = child.val().isDriver;
+            user[5] = child.val().isAdmin;
+            user[6] = child.key;
             console.log(child.val().fname, child.val().email);
           });
         })
@@ -66,8 +68,19 @@ class Login extends Component {
         fname: this.state.firstName,
         lname: this.state.lastName,
         email: this.state.email,
-        passw: this.state.password
+        passw: this.state.password,
+        isDriver: "no",
+        isAdmin: "no"
       }
+
+      user[0] = account.fname;
+      user[1] = account.lname;
+      user[2] = account.email;
+      user[3] = account.passw;
+      user[4] = account.isDriver;
+      user[5] = account.isAdmin;
+      user[6] = account.key;
+
       accountsRef.push(account);
       this.state = {
         firstName: '',
@@ -101,8 +114,8 @@ class Login extends Component {
         <div>
           <form>
             <div id="signinblock">
-              <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@here.com)" />
-              <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (pass06)" style={{marginLeft: '15px'}}/>
+              <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@nondriver.com)" />
+              <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (rider01)" style={{marginLeft: '15px'}}/>
               <br/>
               <br/>
               <button type="submit" onClick={this.login}>Sign In</button>

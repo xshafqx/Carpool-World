@@ -7,6 +7,21 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
+    this.submitEditProfile = this.submitEditProfile.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      repassword: '',
+      isDriver: '',
+      isAdmin: ''
+    };
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   logout() {
@@ -14,14 +29,77 @@ class Home extends Component {
     user[1] = '';
     user[2] = '';
     user[3] = '';
+    user[4] = '';
+    user[5] = '';
 
     console.log(user.email);
     fire.auth().signOut();
   }
 
-/*componentDidMount() {
+  editProfile() {
+    document.getElementById('lblfName').style.display = 'none';
+    document.getElementById('lbllName').style.display = 'none';
 
-  }*/
+    document.getElementById('editfName').style.display = 'inline';
+    document.getElementById('editlName').style.display = 'inline';
+
+    document.getElementById('editButton').style.display = 'none';
+    document.getElementById('changePasswordButton').style.display = 'none';
+    document.getElementById('submitEditButton').style.display = 'inline';
+    document.getElementById('cancelEditButton').style.display = 'inline';
+  }
+
+  submitEditProfile(e) {
+    e.preventDefault();
+    console.log("imhere", this.state.firstName, this.state.lastName);
+
+    user[0] = this.state.firstName;
+    user[1] = this.state.lastName;
+
+    const accountsRef = fire.database().ref('accounts/' + user[6]);
+    accountsRef.orderByChild('email')
+      .equalTo(user[2])
+      .once('value')
+      .then(function (snapshot) {
+        snapshot.ref.update({ fname: user[0] })
+        snapshot.ref.update({ lname: user[1] })
+        });
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+  }
+
+  cancelEditProfile() {
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+  }
+
+  changePassword() {
+
+  }
+
+  // goes back to login page if stumble upon another page by accident without logging in
+  componentDidMount() {
+    if (typeof user[2] === 'undefined') {
+      fire.auth().signOut();
+    }
+  }
 
   // home page button
   homePageButton = () => {
@@ -55,18 +133,18 @@ class Home extends Component {
     document.getElementById('acctPage').style.display = "block";
   }
 
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+render() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>{"Welcome Home, " + user[0] + " " + user[1] + " " + user[2] + " " + user[3]}</h1>
+          <h1>{"Welcome Home, " + user[0]}</h1>
         </div>
         <div>
-           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+          <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+          <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+          <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+          <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
         </div>
       </div>
 
@@ -80,35 +158,78 @@ class Home extends Component {
           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
         </div>
-       </div>
+      </div>
 
-       <div id='msgsPage' style={{display: 'none'}}>
-         <div>
-           <h1>This is the messages tab</h1>
-         </div>
-         <div>
-           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
-         </div>
-       </div>
+      <div id='msgsPage' style={{display: 'none'}}>
+        <div>
+          <h1>This is the messages tab</h1>
+        </div>
+        <div>
+          <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+          <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+          <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+          <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+        </div>
+      </div>
 
-       <div id='acctPage' style={{display: 'none'}}>
-         <div>
-           <h1>This is the account tab</h1>
-           <button onClick={this.logout}>Logout</button>
-           <br/>
-           <br/>
-         </div>
-         <div>
-           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
-           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
-           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
-           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
-         </div>
-       </div>
-     </View>
+      <div id='acctPage' style={{display: 'none'}}>
+        <div>
+          <h1>{user[0] + " " + user[1]}</h1>
+          <br />
+          <br />
+          <table>
+            <tr>
+              <td>First Name:</td>
+              <td>
+                <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
+                <input id='editfName' style={{display:'none'}} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
+              </td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td>
+                <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
+                <input id='editlName' style={{display:'none'}} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
+              </td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>
+                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[2]}</label>
+              </td>
+            </tr>
+            <tr>
+              <td>isDriver:</td>
+              <td>
+                <label id='lblDriver' name='isDriver'>{user[4]}</label>
+              </td>
+            </tr>
+            <tr>
+              <td>isAdmin:</td>
+              <td>
+                <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
+              </td>
+            </tr>
+          </table>
+          <br />
+          <br />
+          <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
+          <button id='changePasswordButton' onClick={this.changePassword}>Change Password</button>
+          <button id='submitEditButton' onClick={this.submitEditProfile} style={{display:'none'}}>Update</button>
+          <button id='cancelEditButton' onClick={this.cancelEditProfile} style={{display:'none'}}>Cancel</button>
+          <br />
+          <br />
+          <button onClick={this.logout}>Logout</button>
+        </div>
+        <br />
+        <div>
+          <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+          <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+          <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+          <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+        </div>
+      </div>
+    </View>
     );
   }
 }
