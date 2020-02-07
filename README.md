@@ -14,7 +14,7 @@ Final Year Project
 - view profile (currently only view ur own profile)
 
 <b>WHATS NOT DONE</b>:
-- live chat ***
+- live chat *shafiq currently doing*
 - rate the driver
 - rate the rider
 - choose your driver
