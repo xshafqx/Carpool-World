@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import fire from './base';
 
-var email;
+var email, fname, lname, passw;
 
 class Login extends Component {
   constructor(props) {
@@ -40,6 +40,9 @@ class Login extends Component {
         .once('value')
         .then(function (snapshot) {
           snapshot.forEach(function(child) {
+            fname = child.val().fname;
+            lname = child.val().lname;
+            passw = child.val().passw;
             console.log(child.val().fname, child.val().email);
           });
         })
@@ -141,4 +144,4 @@ class Login extends Component {
 }
 
 export default Login;
-export { email }
+export { email, fname, lname, passw }

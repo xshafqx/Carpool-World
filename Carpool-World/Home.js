@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import fire from './base';
-import {email} from './Login';
+import {email, fname, lname, passw} from './Login';
 
 class Home extends Component {
   constructor(props) {
@@ -10,14 +10,13 @@ class Home extends Component {
   }
 
   logout() {
-    //var email = require('./Login.js');
     console.log(email);
     fire.auth().signOut();
   }
 
-componentDidMount() {
+/*componentDidMount() {
 
-  }
+  }*/
 
   // home page button
   homePageButton = () => {
@@ -33,16 +32,6 @@ componentDidMount() {
     document.getElementById('bookPage').style.display = "block";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
-
-    const accountsRef = fire.database().ref('accounts');
-    accountsRef.orderByChild('email')
-      .equalTo(email)
-      .once('value')
-      .then(function (snapshot) {
-        snapshot.forEach(function(child) {
-          console.log(child.key, child.val().email);
-        });
-      })
   }
 
   // messages page button
@@ -66,7 +55,7 @@ componentDidMount() {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>{"Welcome Home, " }</h1>
+          <h1>{"Welcome Home, " + fname}</h1>
         </div>
         <div>
            <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
