@@ -14,7 +14,6 @@ Final Year Project
 - view profile (currently only view ur own profile)
 
 <b>WHATS NOT DONE</b>:
-<<<<<<< HEAD
 - live chat *shafiq currently doing* (https://github.com/firebase/friendlychat-web)
 - rate the driver
 - rate the rider
