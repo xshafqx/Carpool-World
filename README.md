@@ -25,8 +25,6 @@ Final Year Project
 - schedule weekly pick-ups
 - cancel ride
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
-- balance low reminder -> in app messaging, pushed thru firebase
-
 
 <b><u>TO WORK ON PROJECT...</u></b>
 - install react -> you have to install a lot of plug ins and shit i dont even remember anymore
