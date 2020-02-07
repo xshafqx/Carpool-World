@@ -16,9 +16,6 @@ Final Year Project
 <b>WHATS NOT DONE</b>:
 <<<<<<< HEAD
 - live chat *shafiq currently doing* (https://github.com/firebase/friendlychat-web)
-=======
-- live chat *shafiq currently doing*
->>>>>>> ef9fe11cc17e2f393f00c1bfc6d5464cf37a77ae
 - rate the driver
 - rate the rider
 - choose your driver
@@ -30,9 +27,7 @@ Final Year Project
 - cancel ride
 <<<<<<< HEAD
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
-=======
 - balance low reminder -> in app messaging, pushed thru firebase
->>>>>>> ef9fe11cc17e2f393f00c1bfc6d5464cf37a77ae
 
 
 <b><u>TO WORK ON PROJECT...</u></b>
