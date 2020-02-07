@@ -9,14 +9,14 @@ Final Year Project
 - log out
 - able to send data to firebase
 - made multiple tabs to act as pages
+- how to retrieve data from firebase
+- edit profile (still have to figure out how to change password thru authenticator)
+- view profile (currently only view ur own profile)
 
 <b>WHATS NOT DONE</b>:
-- how to retrieve data from firebase***
-- in-app messaging
+- live chat ***
 - rate the driver
 - rate the rider
-- view profile 
-- edit profile
 - choose your driver
 - choose your rider
 - automatic route planning (fastest)
@@ -24,7 +24,7 @@ Final Year Project
 - ban user
 - schedule weekly pick-ups
 - cancel ride
-- balance low reminder
+- balance low reminder -> in app messaging, pushed thru firebase
 
 
 <b><u>TO WORK ON PROJECT...</u></b>
