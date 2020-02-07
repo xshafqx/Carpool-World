@@ -24,7 +24,6 @@ Final Year Project
 - ban user
 - schedule weekly pick-ups
 - cancel ride
-<<<<<<< HEAD
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
 - balance low reminder -> in app messaging, pushed thru firebase
 
