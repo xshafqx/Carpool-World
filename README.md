@@ -12,10 +12,9 @@ Final Year Project
 - how to retrieve data from firebase
 - edit profile (still have to figure out how to change password thru authenticator)
 - view profile (currently only view ur own profile)
-- live chat
 
 <b>WHATS NOT DONE</b>:
-- connect live chat *shafiq currently doing* (https://github.com/firebase/friendlychat-web)
+- live chat *shafiq currently doing*
 - rate the driver
 - rate the rider
 - choose your driver
@@ -26,7 +25,6 @@ Final Year Project
 - schedule weekly pick-ups
 - cancel ride
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
-
 
 <b><u>TO WORK ON PROJECT...</u></b>
 - install react -> you have to install a lot of plug ins and shit i dont even remember anymore
