@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
-import fire from './base';
+import firebase from './base';
 
 var user = new Array(7); //fname, lname, email, passw, isDriver, isAdmin, id
 
@@ -26,14 +26,14 @@ class Login extends Component {
 
   login(e) {
     e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
     }).catch((error) => {
           alert("Wrong E-Mail/Password")
       })
 
       user[2] = this.state.email;
 
-      const accountsRef = fire.database().ref('accounts');
+      const accountsRef = firebase.database().ref('accounts');
       accountsRef.orderByChild('email')
         .equalTo(this.state.email)
         .once('value')
@@ -57,13 +57,13 @@ class Login extends Component {
     }
 
     else {
-      fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
       }).then((u)=>{console.log(u)})
       .catch((error) => {
           alert("Ono, something went wrong!\nPlease try again")
       })
 
-      const accountsRef = fire.database().ref('accounts');
+      const accountsRef = firebase.database().ref('accounts');
       const account = {
         fname: this.state.firstName,
         lname: this.state.lastName,
@@ -114,8 +114,8 @@ class Login extends Component {
         <div>
           <form>
             <div id="signinblock">
-              <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@nondriver.com)" />
-              <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (rider01)" style={{marginLeft: '15px'}}/>
+              <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@this.com)" />
+              <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}}/>
               <br/>
               <br/>
               <button type="submit" onClick={this.login}>Sign In</button>

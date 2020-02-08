@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import fire from './base';
+import firebase from './base';
 import {user} from './Login';
 
 class Home extends Component {
@@ -8,6 +8,7 @@ class Home extends Component {
     super(props);
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       firstName: '',
@@ -16,12 +17,20 @@ class Home extends Component {
       password: '',
       repassword: '',
       isDriver: '',
-      isAdmin: ''
+      isAdmin: '',
+      message: ''
     };
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  // goes back to login page if stumble upon another page by accident without logging in
+  componentDidMount() {
+    if (typeof user[2] === 'undefined') {
+      firebase.auth().signOut();
+    }
   }
 
   logout() {
@@ -33,7 +42,7 @@ class Home extends Component {
     user[5] = '';
 
     console.log(user.email);
-    fire.auth().signOut();
+    firebase.auth().signOut();
   }
 
   editProfile() {
@@ -56,7 +65,7 @@ class Home extends Component {
     user[0] = this.state.firstName;
     user[1] = this.state.lastName;
 
-    const accountsRef = fire.database().ref('accounts/' + user[6]);
+    const accountsRef = firebase.database().ref('accounts/' + user[6]);
     accountsRef.orderByChild('email')
       .equalTo(user[2])
       .once('value')
@@ -94,12 +103,29 @@ class Home extends Component {
 
   }
 
-  // goes back to login page if stumble upon another page by accident without logging in
-  componentDidMount() {
-    if (typeof user[2] === 'undefined') {
-      fire.auth().signOut();
-    }
+  // Loads chat messages history and listens for upcoming ones.
+  loadMessages() {
+    var query = firebase.firestore()
+                    .collection('messages')
+                    .orderBy('timestamp', 'desc');
   }
+
+  sendMessage(e) {
+    e.preventDefault();
+
+  		// save in database
+  		firebase.firestore().collection('messages').add({
+        email: user[2],
+        text: this.state.message,
+        timestamp: new Date()
+      }).catch(function(error) {
+        console.error('Error writing new message to database', error);
+      });
+
+      this.state.message = '';
+      document.getElementById('message').value = '';
+      loadMessages();
+  	}
 
   // home page button
   homePageButton = () => {
@@ -161,15 +187,39 @@ render() {
       </div>
 
       <div id='msgsPage' style={{display: 'none'}}>
+
         <div>
           <h1>This is the messages tab</h1>
         </div>
+
+        <div>
+          <div>
+            <h2>Chat</h2>
+          </div>
+
+          <div class="chat">
+            <div class="chat-title">
+              <h1>SIMWorld</h1>
+              <h2>xxx name</h2>
+            </div>
+            <div class="messages">
+              <div class="messages-content"></div>
+            </div>
+            <div class="message-box">
+              <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}}/>
+              <br/><br/>
+              <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+            </div>
+          </div>
+        </div>
+        <br/><br/>
         <div>
           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
         </div>
+
       </div>
 
       <div id='acctPage' style={{display: 'none'}}>
