@@ -12,9 +12,11 @@ Final Year Project
 - how to retrieve data from firebase
 - edit profile (still have to figure out how to change password thru authenticator)
 - view profile (currently only view ur own profile)
+- add counts for use later
+- live chat store chat, select user to chat with, send a new message
 
 <b>WHATS NOT DONE</b>:
-- live chat *shafiq currently doing*
+- retrieving chat *shafiq currently doing*
 - rate the driver
 - rate the rider
 - choose your driver
