@@ -11,16 +11,26 @@ Final Year Project
 - made multiple tabs to act as pages
 - how to retrieve data from firebase
 - edit profile (still have to figure out how to change password thru authenticator)
-- view profile (currently only view ur own profile)
+- view your profile
 - add counts for use later
 - live chat store chat, select user to chat with, send a new message
 
 <b>WHATS NOT DONE</b>:
 - retrieving chat *shafiq currently doing*
+- view other profiles
 - rate the driver
 - rate the rider
 - choose your driver
 - choose your rider
+- cancel confirmed rides
+- cancel requests for rides
+- cancel offer for rides
+- transaction history
+  - sort by time
+- view available rides
+  - sort by area/time?
+- view available passengers
+  - sort by area/time?
 - automatic route planning (fastest)
 - report user
 - ban user
@@ -29,7 +39,7 @@ Final Year Project
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
 
 <b><u>TO WORK ON PROJECT...</u></b>
-- install react -> you have to install a lot of plug ins and shit i dont even remember anymore
+- install react -> you have to install a lot of plugins and shit i dont even remember anymore
 - install github
 - collab this proj
 - go onto node.js terminal
