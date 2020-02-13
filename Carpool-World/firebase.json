@@ -9,7 +9,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist/Carpool-World",
+    "public": "Carpool-World",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -31,13 +31,6 @@
     },
     "pubsub": {
       "port": 8085
-    },
-    "firestore": {
-      "port": 8080
     }
-  },
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
   }
 }
