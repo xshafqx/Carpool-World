@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import firebase from './base';
+import 'firebase/firestore';
 import {user} from './Login';
+
+var unameArr = [];
+var chatName;
 
 class Home extends Component {
   constructor(props) {
@@ -9,15 +13,19 @@ class Home extends Component {
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.searchUsername = this.searchUsername.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       firstName: '',
       lastName: '',
+      username: '',
       email: '',
       password: '',
       repassword: '',
       isDriver: '',
       isAdmin: '',
+      to: '',
+      from: '',
       message: ''
     };
   }
@@ -28,9 +36,42 @@ class Home extends Component {
 
   // goes back to login page if stumble upon another page by accident without logging in
   componentDidMount() {
-    if (typeof user[2] === 'undefined') {
+    if (typeof user[3] === 'undefined') {
       firebase.auth().signOut();
     }
+    else {
+      var query = firebase.firestore()
+                      .collection('messages')
+                      .where("from", "==", "testthis")
+                      .where("to", "==", "testthis")
+                      .orderBy('timestamp', 'asc')
+                      .limit(10);
+
+      query.onSnapshot(function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+          var message = change.doc.data();
+          var html = "";
+      		// give each message a unique ID
+      		html += "<li id='message-" + snapshot.key + "'>";
+          html += message.from + ": " + message.text;
+		      html += "</li>";
+
+          document.getElementById("messages").innerHTML += html;
+        });
+      });
+    }
+
+    // loads accounts
+    firebase.database().ref('accounts')
+                       .orderByChild('email')
+                       .once('value')
+                       .then(function(snapshot) {
+                         var i = 0;
+                         snapshot.forEach(function(child) {
+                           unameArr[i] = child.val().uname;
+                           i++;
+                         })
+                      });
   }
 
   logout() {
@@ -40,6 +81,8 @@ class Home extends Component {
     user[3] = '';
     user[4] = '';
     user[5] = '';
+    user[6] = '';
+    user[7] = '';
 
     console.log(user.email);
     firebase.auth().signOut();
@@ -65,9 +108,9 @@ class Home extends Component {
     user[0] = this.state.firstName;
     user[1] = this.state.lastName;
 
-    const accountsRef = firebase.database().ref('accounts/' + user[6]);
+    const accountsRef = firebase.database().ref('accounts/' + user[7]);
     accountsRef.orderByChild('email')
-      .equalTo(user[2])
+      .equalTo(user[3])
       .once('value')
       .then(function (snapshot) {
         snapshot.ref.update({ fname: user[0] })
@@ -103,19 +146,35 @@ class Home extends Component {
 
   }
 
-  // Loads chat messages history and listens for upcoming ones.
-  loadMessages() {
-    var query = firebase.firestore()
-                    .collection('messages')
-                    .orderBy('timestamp', 'desc');
-  }
-
   sendMessage(e) {
     e.preventDefault();
 
+    // firebase.firestore().collection('messages').doc(chatName)
+    //         .get()
+    //         .then((docSnapshot) => {
+    //           if (docSnapshot.exists) {
+    //             // save in database
+    //         		firebase.firestore().collection('messages/' + chatName).add({
+    //               from: user[2],
+    //               to: this.state.to,
+    //               text: this.state.message,
+    //               timestamp: new Date()
+    //             }).catch(function(error) {
+    //               console.error('Error writing new message to database', error);
+    //             });
+    //
+    //             this.state.message = '';
+    //             document.getElementById('message').value = '';
+    //           }
+    //           else {
+    //
+    //           }
+    //         })
+
   		// save in database
-  		firebase.firestore().collection('messages').add({
-        email: user[2],
+  		firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
+        from: user[2],
+        to: this.state.to,
         text: this.state.message,
         timestamp: new Date()
       }).catch(function(error) {
@@ -124,8 +183,57 @@ class Home extends Component {
 
       this.state.message = '';
       document.getElementById('message').value = '';
-      loadMessages();
   	}
+
+    searchUsername(e) {
+      e.preventDefault();
+
+      var i = 0;
+
+      while (i < unameArr.length+1) {
+        if (this.state.to === unameArr[i]) {
+          document.getElementById('searchUser').style.display = "none";
+          document.getElementById('sendNewMessage').style.display = "block";
+
+          chatName;
+          if (user[2].length != this.state.to.length) {
+            if (user[2].length < this.state.to.length) {
+              chatName = (user[2]+"-"+this.state.to)
+            }
+            else {
+              chatName = (this.state.to+"-"+user[2])
+            }
+          }
+          else {
+            var i = 0;
+            while (i < user[2].length) {
+              if (user[2][i] != this.state.to[i]) {
+                if (user[2][i] < this.state.to[i]) {
+                  chatName = (user[2]+"-"+this.state.to)
+                }
+                else {
+                  chatName = (this.state.to+"-"+user[2])
+                }
+              }
+              else {
+                i++;
+              }
+            }
+          }
+
+          console.log(chatName);
+
+          var newStr = (chatName.replace(user[2], '')).replace('-', '');
+          document.getElementById('chattingTo').innerHTML = newStr;
+
+          break;
+        }
+        else if (i === unameArr.length) {
+          alert("User not found.")
+        }
+        i++;
+      }
+    }
 
   // home page button
   homePageButton = () => {
@@ -159,6 +267,17 @@ class Home extends Component {
     document.getElementById('acctPage').style.display = "block";
   }
 
+  newMsgButton = () => {
+    document.getElementById('searchUser').style.display = "block";
+    document.getElementById('sendNewMessage').style.display = "none";
+    this.state.to = '';
+    document.getElementById('selectUser').value = '';
+  }
+
+  inboxMsgButton = () => {
+
+  }
+
 render() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -187,44 +306,48 @@ render() {
       </div>
 
       <div id='msgsPage' style={{display: 'none'}}>
-
         <div>
           <h1>This is the messages tab</h1>
         </div>
-
-        <div>
-          <div>
-            <h2>Chat</h2>
+        <div class="chat">
+          <div class="chat-title">
+            <h1>SIMWorld Chat</h1>
+          </div>
+          <div id='msgOption' >
+            <button id='inboxMsgButton' title="Inbox" onClick={ this.inboxMsgButton }>Inbox</button>
+            <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
+          </div>
+          <br/>
+          <div id='searchUser' style={{display: 'none'}}>
+            <input id="selectUser" placeholder="Search user" autocomplete="off" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
+            <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
           </div>
 
-          <div class="chat">
-            <div class="chat-title">
-              <h1>SIMWorld</h1>
-              <h2>xxx name</h2>
-            </div>
-            <div class="messages">
-              <div class="messages-content"></div>
+          <div id="sendNewMessage" style={{display: 'none'}}>
+          <h2 id='chattingTo'></h2>
+            <div class="messages-content">
+              <ul id="messages"></ul>
             </div>
             <div class="message-box">
-              <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}}/>
-              <br/><br/>
+              <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
               <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
             </div>
           </div>
         </div>
-        <br/><br/>
+
+        <br />
+        <br />
         <div>
           <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
           <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
           <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
           <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
         </div>
-
       </div>
 
       <div id='acctPage' style={{display: 'none'}}>
         <div>
-          <h1>{user[0] + " " + user[1]}</h1>
+          <h1>{user[2] + " Account"}</h1>
           <br />
           <br />
           <table>
@@ -245,19 +368,19 @@ render() {
             <tr>
               <td>Email:</td>
               <td>
-                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[2]}</label>
+                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
               </td>
             </tr>
             <tr>
               <td>isDriver:</td>
               <td>
-                <label id='lblDriver' name='isDriver'>{user[4]}</label>
+                <label id='lblDriver' name='isDriver'>{user[5]}</label>
               </td>
             </tr>
             <tr>
               <td>isAdmin:</td>
               <td>
-                <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
+                <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
               </td>
             </tr>
           </table>

@@ -3,7 +3,9 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import firebase from './base';
 
-var user = new Array(7); //fname, lname, email, passw, isDriver, isAdmin, id
+var user = new Array(8); //fname, lname, uname, email, passw, isDriver, isAdmin, id
+var countArr = new Array(1); //account
+var unameArr = [];
 
 class Login extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Login extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      username: '',
       email: '',
       password: '',
       repassword: ''
@@ -24,14 +27,27 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  componentDidMount() {
+    // counts current total account registered
+    firebase.database().ref('admin')
+                       .orderByChild('acct')
+                       .once('value')
+                       .then(function(snapshot) {
+                         snapshot.forEach(function(child) {
+                           countArr[0] = child.val().acct;
+                           console.log(child.val().acct, countArr[0]);
+                      })
+                    });
+  }
+
   login(e) {
     e.preventDefault();
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
     }).catch((error) => {
-          alert("Wrong E-Mail/Password")
+          alert(error.message)
       })
 
-      user[2] = this.state.email;
+      user[3] = this.state.email;
 
       const accountsRef = firebase.database().ref('accounts');
       accountsRef.orderByChild('email')
@@ -41,10 +57,11 @@ class Login extends Component {
           snapshot.forEach(function(child) {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
-            user[3] = child.val().passw;
-            user[4] = child.val().isDriver;
-            user[5] = child.val().isAdmin;
-            user[6] = child.key;
+            user[2] = child.val().uname;
+            user[4] = child.val().passw;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.key;
             console.log(child.val().fname, child.val().email);
           });
         })
@@ -52,43 +69,76 @@ class Login extends Component {
 
   signup(e) {
     e.preventDefault();
+
+    // checks for duplicate username
+    var i = 0;
+    var unameCheck = false;
+    while (i < unameArr.length) {
+      if (this.state.username === unameArr[i]) {
+        alert("Username has already been registered");
+        unameCheck = false;
+        break;
+      }
+      else {
+        unameCheck = true;
+      }
+      i++;
+    }
+
+    // checks confirm password
     if (this.state.password != this.state.repassword) {
       alert("Passwords do not match");
     }
 
     else {
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-      }).then((u)=>{console.log(u)})
-      .catch((error) => {
-          alert("Ono, something went wrong!\nPlease try again")
-      })
+      console.log(unameCheck);
+      if (unameCheck) {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+        }).then((u)=>{
+          const accountsRef = firebase.database().ref('accounts');
+          const account = {
+            fname: this.state.firstName,
+            lname: this.state.lastName,
+            uname: this.state.username,
+            email: this.state.email,
+            passw: this.state.password,
+            isDriver: "no",
+            isAdmin: "no"
+          }
 
-      const accountsRef = firebase.database().ref('accounts');
-      const account = {
-        fname: this.state.firstName,
-        lname: this.state.lastName,
-        email: this.state.email,
-        passw: this.state.password,
-        isDriver: "no",
-        isAdmin: "no"
+          user[0] = account.fname;
+          user[1] = account.lname;
+          user[2] = account.uname;
+          user[3] = account.email;
+          user[4] = account.passw;
+          user[5] = account.isDriver;
+          user[6] = account.isAdmin;
+          user[7] = account.key;
+
+          accountsRef.push(account);
+          this.state = {
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            password: '',
+            repassword: '',
+            isDriver: '',
+            isAdmin: ''
+          };
+
+          firebase.database().ref('admin/counter')
+                             .once('value')
+                             .then(function(snapshot) {
+                                 countArr[0] += 1;
+                                 console.log("rewrite: ", countArr[0]);
+                                 snapshot.ref.update({ acct: countArr[0] });
+                            });
+        })
+        .catch((error) => {
+            alert(error.message);
+        })
       }
-
-      user[0] = account.fname;
-      user[1] = account.lname;
-      user[2] = account.email;
-      user[3] = account.passw;
-      user[4] = account.isDriver;
-      user[5] = account.isAdmin;
-      user[6] = account.key;
-
-      accountsRef.push(account);
-      this.state = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        repassword: ''
-      };
     }
   }
 
@@ -96,16 +146,24 @@ class Login extends Component {
     e.preventDefault();
     document.getElementById("signinblock").style.display = "none";
     document.getElementById("signupblock").style.display = "block";
+
+    // loads accounts
+    firebase.database().ref('accounts')
+                       .orderByChild('email')
+                       .once('value')
+                       .then(function(snapshot) {
+                         var i = 0;
+                         snapshot.forEach(function(child) {
+                           unameArr[i] = child.val().uname;
+                           i++;
+                         })
+                      });
   }
 
   cancel(e) {
     e.preventDefault();
     document.getElementById("signinblock").style.display = "block";
     document.getElementById("signupblock").style.display = "none";
-  }
-
-  test(email) {
-    return email;
   }
 
   render() {
@@ -135,6 +193,10 @@ class Login extends Component {
                 <tr>
                   <td>E-Mail</td>
                   <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email"/></td>
+                </tr>
+                <tr>
+                  <td>Username</td>
+                  <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username"/></td>
                 </tr>
                 <tr>
                   <td>Password</td>
