@@ -225,7 +225,8 @@ class Home extends Component {
           console.log(chatName);
 
           clickedUser = (chatName.replace(user[2], '')).replace('-', '');
-          document.getElementById('chattingTo').innerHTML = "<a "clickedUser;
+          document.getElementById('chattingTo').innerHTML = "<button id='viewOtherUserButton' onClick={ this.viewUserProfile } ></button>";
+          viewOtherUserButton.appendChild(Document.createTextNode(clickedUser));
           break;
         }
         else if (i === unameArr.length) {
@@ -241,6 +242,7 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
+    document.getElementById('otherAcctPage').style.display = "none";
   }
 
   // bookings page button
@@ -249,6 +251,7 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "block";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
+    document.getElementById('otherAcctPage').style.display = "none";
   }
 
   // messages page button
@@ -257,6 +260,7 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "block";
     document.getElementById('acctPage').style.display = "none";
+    document.getElementById('otherAcctPage').style.display = "none";
   }
 
   // account page button
@@ -265,8 +269,10 @@ class Home extends Component {
     document.getElementById('bookPage').style.display = "none";
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
+    document.getElementById('otherAcctPage').style.display = "none";
   }
 
+  // new msg button
   newMsgButton = () => {
     document.getElementById('searchUser').style.display = "block";
     document.getElementById('sendNewMessage').style.display = "none";
@@ -276,6 +282,14 @@ class Home extends Component {
 
   inboxMsgButton = () => {
 
+  }
+
+  viewUserProfile = () => {
+    document.getElementById('otherAcctPage').style.display = "block";
+    document.getElementById('homePage').style.display = "none";
+    document.getElementById('bookPage').style.display = "none";
+    document.getElementById('msgsPage').style.display = "none";
+    document.getElementById('acctPage').style.display = "none";
   }
 
 render() {
@@ -405,7 +419,7 @@ render() {
 
       <div id='otherAcctPage' style={{display: 'none'}}>
         <div>
-          <h1>{user[2] + "'s Account"}</h1>
+          <h1>{clickedUser + "'s Account"}</h1>
           <br />
           <br />
           <table>
