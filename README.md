@@ -9,7 +9,7 @@ Final Year Project
 - log out
 - able to send data to firebase
 - made multiple tabs to act as pages
-- how to retrieve data from firebase
+- able to retrieve data from firebase
 - edit profile (still have to figure out how to change password thru authenticator)
 - view your profile
 - add counts for use later

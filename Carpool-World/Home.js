@@ -6,6 +6,7 @@ import {user} from './Login';
 
 var unameArr = [];
 var chatName;
+var clickedUser;
 
 class Home extends Component {
   constructor(props) {
@@ -223,9 +224,8 @@ class Home extends Component {
 
           console.log(chatName);
 
-          var newStr = (chatName.replace(user[2], '')).replace('-', '');
-          document.getElementById('chattingTo').innerHTML = newStr;
-
+          clickedUser = (chatName.replace(user[2], '')).replace('-', '');
+          document.getElementById('chattingTo').innerHTML = "<a "clickedUser;
           break;
         }
         else if (i === unameArr.length) {
@@ -347,7 +347,65 @@ render() {
 
       <div id='acctPage' style={{display: 'none'}}>
         <div>
-          <h1>{user[2] + " Account"}</h1>
+          <h1>{user[2] + "'s Account"}</h1>
+          <br />
+          <br />
+          <table>
+            <tr>
+              <td>First Name:</td>
+              <td>
+                <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
+                <input id='editfName' style={{display:'none'}} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
+              </td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td>
+                <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
+                <input id='editlName' style={{display:'none'}} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
+              </td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>
+                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
+              </td>
+            </tr>
+            <tr>
+              <td>isDriver:</td>
+              <td>
+                <label id='lblDriver' name='isDriver'>{user[5]}</label>
+              </td>
+            </tr>
+            <tr>
+              <td>isAdmin:</td>
+              <td>
+                <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
+              </td>
+            </tr>
+          </table>
+          <br />
+          <br />
+          <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
+          <button id='changePasswordButton' onClick={this.changePassword}>Change Password</button>
+          <button id='submitEditButton' onClick={this.submitEditProfile} style={{display:'none'}}>Update</button>
+          <button id='cancelEditButton' onClick={this.cancelEditProfile} style={{display:'none'}}>Cancel</button>
+          <br />
+          <br />
+          <button onClick={this.logout}>Logout</button>
+        </div>
+        <br />
+        <div>
+          <button id='homeButton' title="Home" onClick={ this.homePageButton }>Home</button>
+          <button id='bookButton' title="Book" onClick={ this.bookPageButton }>Book</button>
+          <button id='msgsButton' title="Messages" onClick={ this.msgsPageButton }>Messages</button>
+          <button id='acctButton' title="Account" onClick={ this.acctPageButton }>Account</button>
+        </div>
+      </div>
+
+      <div id='otherAcctPage' style={{display: 'none'}}>
+        <div>
+          <h1>{user[2] + "'s Account"}</h1>
           <br />
           <br />
           <table>
