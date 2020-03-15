@@ -17,8 +17,8 @@ Final Year Project
 - view other profiles
 
 <b>WHATS NOT DONE</b>:
-- retrieving chat *shafiq currently doing*
-- storing messages of chat
+- storing messages of chat *shafiq currently doing*
+- retrieving chat
 - rate the driver
 - rate the rider
 - choose your driver
