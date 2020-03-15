@@ -191,11 +191,14 @@ class Home extends Component {
 
       var i = 0;
 
+      // creates chat based on usernames
       while (i < unameArr.length+1) {
+        // checks if there is a valid account in the database
         if (this.state.to === unameArr[i]) {
           document.getElementById('searchUser').style.display = "none";
           document.getElementById('sendNewMessage').style.display = "block";
 
+          //creates chat based on username length
           chatName;
           if (user[2].length != this.state.to.length) {
             if (user[2].length < this.state.to.length) {
@@ -205,6 +208,7 @@ class Home extends Component {
               chatName = (this.state.to+"-"+user[2])
             }
           }
+          // if same length compare by alphabets
           else {
             var i = 0;
             while (i < user[2].length) {
@@ -224,9 +228,9 @@ class Home extends Component {
 
           console.log(chatName);
 
-          clickedUser = (chatName.replace(user[2], '')).replace('-', '');
-          document.getElementById('chattingTo').innerHTML = "<button id='viewOtherUserButton' onClick={ this.viewUserProfile } ></button>";
-          viewOtherUserButton.appendChild(Document.createTextNode(clickedUser));
+          clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
+          chattingTo.innerHTML = clickedUser;
+          viewOtherAcctPageUser.innerHTML = clickedUser;
           break;
         }
         else if (i === unameArr.length) {
@@ -235,6 +239,29 @@ class Home extends Component {
         i++;
       }
     }
+
+    viewUserProfile() {
+    document.getElementById('otherAcctPage').style.display = "block";
+    document.getElementById('homePage').style.display = "none";
+    document.getElementById('bookPage').style.display = "none";
+    document.getElementById('msgsPage').style.display = "none";
+    document.getElementById('acctPage').style.display = "none";
+
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('uname')
+      .equalTo(clickedUser)
+      .once('value')
+      .then(function (snapshot) {
+        snapshot.forEach(function(child) {
+          lblotherfName.innerHTML = child.val().fname;
+          lblotherlName.innerHTML = child.val().lname;
+          lblotherEmail.innerHTML = child.val().email;
+          lblotherDriver.innerHTML = child.val().isDriver;
+          lblotherAdmin.innerHTML = child.val().isAdmin;
+          console.log(child.val().fname, child.val().email);
+        });
+      })
+  }
 
   // home page button
   homePageButton = () => {
@@ -284,14 +311,6 @@ class Home extends Component {
 
   }
 
-  viewUserProfile = () => {
-    document.getElementById('otherAcctPage').style.display = "block";
-    document.getElementById('homePage').style.display = "none";
-    document.getElementById('bookPage').style.display = "none";
-    document.getElementById('msgsPage').style.display = "none";
-    document.getElementById('acctPage').style.display = "none";
-  }
-
 render() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -338,7 +357,7 @@ render() {
           </div>
 
           <div id="sendNewMessage" style={{display: 'none'}}>
-          <h2 id='chattingTo'></h2>
+          <button id='chattingTo' onClick={ this.viewUserProfile }></button>
             <div class="messages-content">
               <ul id="messages"></ul>
             </div>
@@ -419,49 +438,40 @@ render() {
 
       <div id='otherAcctPage' style={{display: 'none'}}>
         <div>
-          <h1>{clickedUser + "'s Account"}</h1>
-          <br />
+          <h1 id="viewOtherAcctPageUser"></h1>
           <br />
           <table>
             <tr>
               <td>First Name:</td>
               <td>
-                <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
-                <input id='editfName' style={{display:'none'}} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
+                <label id='lblotherfName' style={{display:'inline'}}></label>
               </td>
             </tr>
             <tr>
               <td>Last Name:</td>
               <td>
-                <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
-                <input id='editlName' style={{display:'none'}} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
+                <label id='lblotherlName' style={{display:'inline'}}></label>
               </td>
             </tr>
             <tr>
               <td>Email:</td>
               <td>
-                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
+                <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
               </td>
             </tr>
             <tr>
               <td>isDriver:</td>
               <td>
-                <label id='lblDriver' name='isDriver'>{user[5]}</label>
+                <label id='lblotherDriver' name='isDriver'></label>
               </td>
             </tr>
             <tr>
               <td>isAdmin:</td>
               <td>
-                <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
+                <label id='lblotherAdmin' name='isAdmin'></label>
               </td>
             </tr>
           </table>
-          <br />
-          <br />
-          <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
-          <button id='changePasswordButton' onClick={this.changePassword}>Change Password</button>
-          <button id='submitEditButton' onClick={this.submitEditProfile} style={{display:'none'}}>Update</button>
-          <button id='cancelEditButton' onClick={this.cancelEditProfile} style={{display:'none'}}>Cancel</button>
           <br />
           <br />
           <button onClick={this.logout}>Logout</button>
