@@ -43,7 +43,7 @@ Final Year Project
 - install react -> you have to install a lot of plugins and shit i dont even remember anymore
 - install github
 - collab this proj
-- go onto node.js terminal
+- go onto node.js command prompt
   - cd (directory of the project folder)
     - for eg. mine is cd d:/GitHub/Carpool World/Carpool-World/Carpool-World
   - (enter your drive)
