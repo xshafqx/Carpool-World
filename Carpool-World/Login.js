@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import firebase from './base';
 
-var user = new Array(8); //fname, lname, uname, email, passw, isDriver, isAdmin, id
+var user = new Array(9); //fname, lname, uname, email, passw, isDriver, isAdmin, isBanned, id
 var countArr = new Array(1); //account
 var unameArr = [];
 
@@ -40,31 +40,40 @@ class Login extends Component {
                     });
   }
 
+  checkEmail(e) {
+    user[3] = document.getElementById("signinemail").value;
+
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(user[3])
+      .once('value')
+      .then(function (snapshot) {
+        snapshot.forEach(function(child) {
+          user[0] = child.val().fname;
+          user[1] = child.val().lname;
+          user[2] = child.val().uname;
+          user[4] = child.val().passw;
+          user[5] = child.val().isDriver;
+          user[6] = child.val().isAdmin;
+          user[7] = child.val().isBanned;
+          user[8] = child.key;
+          console.log(child.val().fname, child.val().email, user[7]);
+        });
+      })
+  }
+
   login(e) {
     e.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-    }).catch((error) => {
-          alert(error.message)
+
+    if (user[7].toString() === "yes") {
+      alert("Account is banned. Please contact administrator.")
+    }
+
+    else {
+      firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {}).catch((error) => {
+        alert(error.message)
       })
-
-      user[3] = this.state.email;
-
-      const accountsRef = firebase.database().ref('accounts');
-      accountsRef.orderByChild('email')
-        .equalTo(this.state.email)
-        .once('value')
-        .then(function (snapshot) {
-          snapshot.forEach(function(child) {
-            user[0] = child.val().fname;
-            user[1] = child.val().lname;
-            user[2] = child.val().uname;
-            user[4] = child.val().passw;
-            user[5] = child.val().isDriver;
-            user[6] = child.val().isAdmin;
-            user[7] = child.key;
-            console.log(child.val().fname, child.val().email);
-          });
-        })
+    }
   }
 
   signup(e) {
@@ -174,8 +183,8 @@ class Login extends Component {
         <div>
           <form>
             <div id="signinblock">
-              <input value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@this.com)" />
-              <input value={this.state.password} onChange={this.handleChange} type="password" name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}}/>
+              <input id="signinemail" value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@this.com)" />
+              <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type="password" name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}}/>
               <br/>
               <br/>
               <button type="submit" onClick={this.login}>Sign In</button>
