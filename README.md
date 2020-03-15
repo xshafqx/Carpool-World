@@ -13,11 +13,12 @@ Final Year Project
 - edit profile (still have to figure out how to change password thru authenticator)
 - view your profile
 - add counts for use later
-- live chat store chat, select user to chat with, send a new message
+- live chat store chat, select user to chat with
+- view other profiles
 
 <b>WHATS NOT DONE</b>:
 - retrieving chat *shafiq currently doing*
-- view other profiles
+- storing messages of chat
 - rate the driver
 - rate the rider
 - choose your driver
