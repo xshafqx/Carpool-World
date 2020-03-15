@@ -103,7 +103,8 @@ class Login extends Component {
             email: this.state.email,
             passw: this.state.password,
             isDriver: "no",
-            isAdmin: "no"
+            isAdmin: "no",
+            isBanned: "no"
           }
 
           user[0] = account.fname;
@@ -124,7 +125,8 @@ class Login extends Component {
             password: '',
             repassword: '',
             isDriver: '',
-            isAdmin: ''
+            isAdmin: '',
+            isBanned: ''
           };
 
           firebase.database().ref('admin/counter')
