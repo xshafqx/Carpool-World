@@ -42,6 +42,7 @@ class Login extends Component {
 
   checkEmail(e) {
     user[3] = document.getElementById("signinemail").value;
+    user[3] = user[3].toString().toLowerCase();
 
     const accountsRef = firebase.database().ref('accounts');
     accountsRef.orderByChild('email')
@@ -109,7 +110,7 @@ class Login extends Component {
             fname: this.state.firstName,
             lname: this.state.lastName,
             uname: this.state.username,
-            email: this.state.email,
+            email: this.state.email.toString().toLowerCase(),
             passw: this.state.password,
             isDriver: "no",
             isAdmin: "no",
