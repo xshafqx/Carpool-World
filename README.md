@@ -40,6 +40,12 @@ Final Year Project
 - cancel ride
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
 - audit/log
+- connect APIs
+  - Stripe API
+  - eNETS Open API
+  - MapQuest Directions API
+  - MapQuest Traffic API
+- design the app (UI/UX)
 
 <b><u>TO WORK ON PROJECT...</u></b>
 - install react -> you have to install a lot of plugins and shit i dont even remember anymore
