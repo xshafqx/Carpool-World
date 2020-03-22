@@ -13,6 +13,7 @@ class Home extends Component {
     super(props);
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
+    this.submitPassword = this.submitPassword.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.searchUsername = this.searchUsername.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -21,8 +22,8 @@ class Home extends Component {
       lastName: '',
       username: '',
       email: '',
-      password: '',
-      repassword: '',
+      newPassword: '',
+      confirmPassword: '',
       isDriver: '',
       isAdmin: '',
       to: '',
@@ -90,6 +91,9 @@ class Home extends Component {
   }
 
   editProfile() {
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
     document.getElementById('lblfName').style.display = 'none';
     document.getElementById('lbllName').style.display = 'none';
 
@@ -100,23 +104,71 @@ class Home extends Component {
     document.getElementById('changePasswordButton').style.display = 'none';
     document.getElementById('submitEditButton').style.display = 'inline';
     document.getElementById('cancelEditButton').style.display = 'inline';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
   }
 
   submitEditProfile(e) {
     e.preventDefault();
     console.log("imhere", this.state.firstName, this.state.lastName);
 
-    user[0] = this.state.firstName;
-    user[1] = this.state.lastName;
+    if (this.state.firstName != "" && this.state.lastName != "") {
+      user[0] = this.state.firstName;
+      user[1] = this.state.lastName;
 
-    const accountsRef = firebase.database().ref('accounts/' + user[7]);
-    accountsRef.orderByChild('email')
-      .equalTo(user[3])
-      .once('value')
-      .then(function (snapshot) {
-        snapshot.ref.update({ fname: user[0] })
-        snapshot.ref.update({ lname: user[1] })
+      const accountsRef = firebase.database().ref('accounts/' + user[7]);
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            fname: user[0]
+          })
+          snapshot.ref.update({
+            lname: user[1]
+          })
         });
+    }
+
+    else if (this.state.firstName != "" && this.state.lastName === "") {
+      user[0] = this.state.firstName;
+
+      const accountsRef = firebase.database().ref('accounts/' + user[7]);
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            fname: user[0]
+          })
+        });
+    }
+
+    else if (this.state.firstName == "" && this.state.lastName != "") {
+      user[1] = this.state.lastName;
+
+      const accountsRef = firebase.database().ref('accounts/' + user[7]);
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            lname: user[1]
+          })
+        });
+    }
+
+    else {
+      alert("Account was not updated.")
+    }
+
+    console.log("userarray", user[0], user[1]);
+
+    document.getElementById('lblfName').innerHTML = user[0];
+    document.getElementById('lbllName').innerHTML = user[1];
+
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
 
     document.getElementById('lblfName').style.display = 'inline';
     document.getElementById('lbllName').style.display = 'inline';
@@ -128,9 +180,17 @@ class Home extends Component {
     document.getElementById('changePasswordButton').style.display = 'inline';
     document.getElementById('submitEditButton').style.display = 'none';
     document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
   }
 
   cancelEditProfile() {
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
     document.getElementById('lblfName').style.display = 'inline';
     document.getElementById('lbllName').style.display = 'inline';
 
@@ -141,50 +201,120 @@ class Home extends Component {
     document.getElementById('changePasswordButton').style.display = 'inline';
     document.getElementById('submitEditButton').style.display = 'none';
     document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
   }
 
   changePassword() {
+    document.getElementById('tblProfile').style.display = 'none';
+    document.getElementById('tblPassword').style.display = 'block';
 
+    document.getElementById('lblfName').style.display = 'none';
+    document.getElementById('lbllName').style.display = 'none';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'none';
+    document.getElementById('changePasswordButton').style.display = 'none';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'inline';
+    document.getElementById('cancelPasswordButton').style.display = 'inline';
+
+    console.log(user[3], user[7]);
+  }
+
+  submitPassword(e) {
+    e.preventDefault();
+
+    if (this.state.newPassword === this.state.confirmPassword) {
+      var user = firebase.auth().currentUser;
+
+      user.updatePassword(this.state.confirmPassword).then(function () {
+        alert("Password updated successfully!");
+      }).catch(function (error) {
+        alert(error);
+      });
+
+      document.getElementById('tblProfile').style.display = 'block';
+      document.getElementById('tblPassword').style.display = 'none';
+
+      document.getElementById('lblfName').style.display = 'inline';
+      document.getElementById('lbllName').style.display = 'inline';
+
+      document.getElementById('editfName').style.display = 'none';
+      document.getElementById('editlName').style.display = 'none';
+
+      document.getElementById('editButton').style.display = 'inline';
+      document.getElementById('changePasswordButton').style.display = 'inline';
+      document.getElementById('submitEditButton').style.display = 'none';
+      document.getElementById('cancelEditButton').style.display = 'none';
+      document.getElementById('submitPasswordButton').style.display = 'none';
+      document.getElementById('cancelPasswordButton').style.display = 'none';
+
+      document.getElementById('editNewPassword').value = null;
+      document.getElementById('confirmNewPassword').value = null;
+    }
+    else {
+      alert("Passwords do not match!");
+    }
+  }
+
+  cancelPassword() {
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
   }
 
   sendMessage(e) {
     e.preventDefault();
 
-    // firebase.firestore().collection('messages').doc(chatName)
-    //         .get()
-    //         .then((docSnapshot) => {
-    //           if (docSnapshot.exists) {
-    //             // save in database
-    //         		firebase.firestore().collection('messages/' + chatName).add({
-    //               from: user[2],
-    //               to: this.state.to,
-    //               text: this.state.message,
-    //               timestamp: new Date()
-    //             }).catch(function(error) {
-    //               console.error('Error writing new message to database', error);
-    //             });
-    //
-    //             this.state.message = '';
-    //             document.getElementById('message').value = '';
-    //           }
-    //           else {
-    //
-    //           }
-    //         })
+    firebase.firestore().collection('messages').doc(chatName)
+            .get()
+            .then((docSnapshot) => {
+              if (docSnapshot.exists) {
+                // save in database
+            		firebase.firestore().collection('messages/' + chatName).add({
+                  from: user[2],
+                  to: this.state.to,
+                  text: this.state.message,
+                  timestamp: new Date()
+                }).catch(function(error) {
+                  console.error('Error writing new message to database', error);
+                });
+    
+                this.state.message = '';
+                document.getElementById('message').value = '';
+              }
+              else {
+                // save in database
+                firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
+                  from: user[2],
+                  to: this.state.to,
+                  text: this.state.message,
+                  timestamp: new Date()
+                }).catch(function (error) {
+                  console.error('Error writing new message to database', error);
+                });
 
-  		// save in database
-  		firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
-        from: user[2],
-        to: this.state.to,
-        text: this.state.message,
-        timestamp: new Date()
-      }).catch(function(error) {
-        console.error('Error writing new message to database', error);
-      });
-
-      this.state.message = '';
-      document.getElementById('message').value = '';
-  	}
+                this.state.message = '';
+                document.getElementById('message').value = '';
+                }
+              })
+            }
 
     searchUsername(e) {
       e.preventDefault();
@@ -297,6 +427,8 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
     document.getElementById('otherAcctPage').style.display = "none";
+
+    console.log(user[3], user[7]);
   }
 
   // new msg button
@@ -383,7 +515,7 @@ render() {
           <h1>{user[2] + "'s Account"}</h1>
           <br />
           <br />
-          <table>
+          <table id='tblProfile'>
             <tr>
               <td>First Name:</td>
               <td>
@@ -417,12 +549,24 @@ render() {
               </td>
             </tr>
           </table>
+          <table id='tblPassword' style={{display: 'none'}}>
+            <tr>
+              <td>New Password:</td>
+              <td><input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange} type="password" name="newPassword" /></td>
+            </tr>
+            <tr>
+              <td>Confirm Password:</td>
+              <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} type="password" name="confirmPassword" /></td>
+            </tr>
+          </table>
           <br />
           <br />
           <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
           <button id='changePasswordButton' onClick={this.changePassword}>Change Password</button>
           <button id='submitEditButton' onClick={this.submitEditProfile} style={{display:'none'}}>Update</button>
           <button id='cancelEditButton' onClick={this.cancelEditProfile} style={{display:'none'}}>Cancel</button>
+          <button id='submitPasswordButton' onClick={this.submitPassword} style={{display:'none'}}>Update</button>
+          <button id='cancelPasswordButton' onClick={this.cancelPassword} style={{display:'none'}}>Cancel</button>
           <br />
           <br />
           <button onClick={this.logout}>Logout</button>

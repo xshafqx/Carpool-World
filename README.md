@@ -10,11 +10,12 @@ Final Year Project
 - able to send data to firebase
 - made multiple tabs to act as pages
 - able to retrieve data from firebase
-- edit profile (still have to figure out how to change password thru authenticator)
+- edit profile
 - view your profile
 - add counts for use later
 - live chat store chat, select user to chat with
 - view other profiles
+- update password
 
 <b>WHATS NOT DONE</b>:
 - storing messages of chat *shafiq currently doing*

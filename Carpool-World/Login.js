@@ -124,7 +124,8 @@ class Login extends Component {
           user[4] = account.passw;
           user[5] = account.isDriver;
           user[6] = account.isAdmin;
-          user[7] = account.key;
+          user[7] = account.isBanned;
+          user[8] = account.key;
 
           accountsRef.push(account);
           this.state = {
