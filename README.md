@@ -16,10 +16,10 @@ Final Year Project
 - live chat store chat, select user to chat with
 - view other profiles
 - update password
+- storing messages of chat
 
 <b>WHATS NOT DONE</b>:
-- storing messages of chat *shafiq currently doing*
-- retrieving chat
+- retrieving chat *shafiq currently doing*
 - rate the driver
 - rate the rider
 - choose your driver
@@ -39,6 +39,7 @@ Final Year Project
 - schedule weekly pick-ups
 - cancel ride
 - balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
+- audit/log
 
 <b><u>TO WORK ON PROJECT...</u></b>
 - install react -> you have to install a lot of plugins and shit i dont even remember anymore
