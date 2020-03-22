@@ -293,7 +293,7 @@ class Home extends Component {
                   text: this.state.message,
                   timestamp: new Date()
                 }).catch(function(error) {
-                  console.error('Error writing new message to database', error);
+                  alert('Error sending message.', error);
                 });
     
                 this.state.message = '';
@@ -307,7 +307,7 @@ class Home extends Component {
                   text: this.state.message,
                   timestamp: new Date()
                 }).catch(function (error) {
-                  console.error('Error writing new message to database', error);
+                  alert('Error sending message.', error);
                 });
 
                 this.state.message = '';
