@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import firebase from './base';
 
-var user = new Array(9); //fname, lname, uname, email, passw, isDriver, isAdmin, isBanned, id
+var user = new Array(8); //fname, lname, uname, email, isDriver, isAdmin, isBanned, id
 var countArr = new Array(1); //account
 var unameArr = [];
 
@@ -53,11 +53,10 @@ class Login extends Component {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
           user[2] = child.val().uname;
-          user[4] = child.val().passw;
-          user[5] = child.val().isDriver;
-          user[6] = child.val().isAdmin;
-          user[7] = child.val().isBanned;
-          user[8] = child.key;
+          user[4] = child.val().isDriver;
+          user[5] = child.val().isAdmin;
+          user[6] = child.val().isBanned;
+          user[7] = child.key;
           console.log(child.val().fname, child.val().email, user[7]);
         });
       })
@@ -121,11 +120,10 @@ class Login extends Component {
           user[1] = account.lname;
           user[2] = account.uname;
           user[3] = account.email;
-          user[4] = account.passw;
-          user[5] = account.isDriver;
-          user[6] = account.isAdmin;
-          user[7] = account.isBanned;
-          user[8] = account.key;
+          user[4] = account.isDriver;
+          user[5] = account.isAdmin;
+          user[6] = account.isBanned;
+          user[7] = account.key;
 
           accountsRef.push(account);
           this.state = {
