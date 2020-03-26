@@ -2,8 +2,11 @@
 
 
 <b>Starting off...</b>
+>>>>>>> master
+
 
 Install Node.js accordingly
+
 
 To install react globally :
 <pre><code>npm install -g react-native-cli</code></pre>
@@ -27,6 +30,7 @@ Go to your terminal :
 
 
 <u>On your preferred editor, open the Carpool folder</u>
+
 
 To create and push your new branch to github :
 <pre>
@@ -52,6 +56,7 @@ To commit changes to remote branch :
 
 To switch branch :
 <pre><code>git checkout [branch_name]</code></pre>
+
 
 In-Progress | Done
 ----------- | -----------
