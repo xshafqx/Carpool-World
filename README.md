@@ -1,7 +1,7 @@
 # Carpool-World (FYP-S1-10)
 
 
-<h2>Starting off...</h2>
+<b>Starting off...</b>
 
 Install Node.js accordingly
 
@@ -53,50 +53,24 @@ To commit changes to remote branch :
 To switch branch :
 <pre><code>git checkout [branch_name]</code></pre>
 
-
-<b>WHATS DONE</b>:
-- connected to firebase
-- registration authentication to firebase
-- synced database to firebase
-- log in
-- log out
-- able to send data to firebase
-- made multiple tabs to act as pages
-- able to retrieve data from firebase
-- edit profile
-- view your profile
-- add counts for use later
-- live chat store chat, select user to chat with
-- view other profiles
-- update password
-- storing messages of chat
-
-
-<b>WHATS NOT DONE</b>:
-- retrieving chat *shafiq currently doing*
-- rate the driver
-- rate the rider
-- choose your driver
-- choose your rider
-- cancel confirmed rides
-- cancel requests for rides
-- cancel offer for rides
-- transaction history
-- sort by time
-- view available rides
-- sort by area/time?
-- view available passengers
-- sort by area/time?
-- automatic route planning (fastest)
-- report user
-- ban user
-- schedule weekly pick-ups
-- cancel ride
-- balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification)
-- audit/log
-- connect APIs
-- Stripe API
-- eNETS Open API
-- MapQuest Directions API
-- MapQuest Traffic API
-- design the app (UI/UX)
+**In-Progress | Done**
+Retrieving chats [Shafiq doing now] | Connected to Firebase
+Rate the driver and rider | Registration authentication to Firebase
+Choose the driver and rider | Synced database to Firebase
+Cancel confirmed ride | Logging in of SIMRide
+Reject request/offer for ride | Logging out of SIMRide
+Transaction/booking history | Send data to Firebase
+Display ist of available rides | Made multiple tabs to act as pages
+Sorting - by area/time | Retrieve data from Firebase
+Report user | Edit Profile - Account management
+Ban user (blacklist user) | View Profile - Account management
+Weekly pickup scheduler | Live chat, store chat, select user to chat with
+Automatic route planning (fastest) | View other profiles
+Balance low reminder -> in app messaging, pushed thru firebase (https://console.firebase.google.com/project/carpool-world/notification) | Update password - Account management
+Audit/log | Stored chat history
+Connect APIs | 
+Stripe API | 
+eNETS Open API | 
+MapQuest Directions API | 
+MapQuest Traffic API | 
+Design the app (UI/UX) [Vinny doing now] | 
