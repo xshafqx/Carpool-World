@@ -51,7 +51,7 @@ To commit changes to remote branch :
 
 
 To switch branch :
-<pre><code>git checkout [branch_name]<code></pre>
+<pre><code>git checkout [branch_name]</code></pre>
 
 
 <b>WHATS DONE</b>:
