@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Link } from 'react-router-dom';
 import firebase from './base';
+import { validate } from 'email-validator';
 
+var validator = require("email-validator");
 var user = new Array(8); //fname, lname, uname, email, isDriver, isAdmin, isBanned, id
 var countArr = new Array(1); //account
 var unameArr = [];
+var emailArr = [];
 
 class Login extends Component {
   constructor(props) {
@@ -38,6 +41,21 @@ class Login extends Component {
                            console.log(child.val().acct, countArr[0]);
                       })
                     });
+
+  // loads accounts
+  firebase.database().ref('accounts')
+    .orderByChild('email')
+    .once('value')
+    .then(function (snapshot) {
+      var i = 0;
+      snapshot.forEach(function (child) {
+        unameArr[i] = child.val().uname;
+        emailArr[i] = child.val().email;
+        i++;
+      })
+    });
+
+    console.log(emailArr, unameArr);
   }
 
   checkEmail(e) {
@@ -64,15 +82,44 @@ class Login extends Component {
 
   login(e) {
     e.preventDefault();
+    var i = 1;
+    var email = this.state.email;
 
-    if (user[7].toString() === "yes") {
-      alert("Account is banned. Please contact administrator.")
+    // for (var i=1; i < emailArr.length+1; i++) {
+    //   console.log(emailArr[i].toString(), this.state.email)
+    //   if (emailArr[i].toString() === this.state.email.toString()) {
+    //     check = true;
+    //     break;
+    //   }
+    //   else if (i === emailArr.length){
+    //     alert("account not found bro");
+    //   }
+    //}
+    if (!validate(email)) {
+      alert("Email not valid bro");
     }
-
     else {
-      firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {}).catch((error) => {
-        alert(error.message)
-      })
+      while (i < emailArr.length) {
+        console.log(emailArr[i], email);
+        if (emailArr[i].toString() === email) {
+          if (user[7].toString() === "yes") {
+            alert("Account is banned. Please contact administrator.")
+          }
+          else {
+            firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
+              alert(error.message)
+            })
+            break;
+          }
+        }
+        else if (i == emailArr.length-1) {
+          alert("Email not found yo");
+          i++;
+        }
+        else {
+          i++;
+        }
+      }
     }
   }
 
@@ -157,18 +204,6 @@ class Login extends Component {
     e.preventDefault();
     document.getElementById("signinblock").style.display = "none";
     document.getElementById("signupblock").style.display = "block";
-
-    // loads accounts
-    firebase.database().ref('accounts')
-                       .orderByChild('email')
-                       .once('value')
-                       .then(function(snapshot) {
-                         var i = 0;
-                         snapshot.forEach(function(child) {
-                           unameArr[i] = child.val().uname;
-                           i++;
-                         })
-                      });
   }
 
   cancel(e) {

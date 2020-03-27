@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.5",
+    "email-validator": "^2.0.4",
     "expo": "~36.0.0",
     "firebase": "^7.8.0",
     "firechat": "^3.0.1",

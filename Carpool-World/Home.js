@@ -5,6 +5,8 @@ import 'firebase/firestore';
 import {user} from './Login';
 
 var unameArr = [];
+var allchats = [];
+var chats = [];
 var chatName;
 var clickedUser;
 
@@ -17,6 +19,7 @@ class Home extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.searchUsername = this.searchUsername.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.openChat = this.openChat.bind(this);
     this.state = {
       firstName: '',
       lastName: '',
@@ -28,7 +31,8 @@ class Home extends Component {
       isAdmin: '',
       to: '',
       from: '',
-      message: ''
+      message: '',
+      id: ''
     };
   }
 
@@ -42,27 +46,6 @@ class Home extends Component {
       firebase.auth().signOut();
     }
     else {
-      var query = firebase.firestore()
-                      .collection('messages')
-                      .where("from", "==", "testthis")
-                      .where("to", "==", "testthis")
-                      .orderBy('timestamp', 'asc')
-                      .limit(10);
-
-      query.onSnapshot(function(snapshot) {
-        snapshot.docChanges().forEach(function(change) {
-          var message = change.doc.data();
-          var html = "";
-      		// give each message a unique ID
-      		html += "<li id='message-" + snapshot.key + "'>";
-          html += message.from + ": " + message.text;
-		      html += "</li>";
-
-          document.getElementById("messages").innerHTML += html;
-        });
-      });
-    }
-
     // loads accounts
     firebase.database().ref('accounts')
                        .orderByChild('email')
@@ -74,6 +57,15 @@ class Home extends Component {
                            i++;
                          })
                       });
+
+    firebase.firestore().collection("chat").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        allchats.push(doc.id);
+        chats = Array.from(new Set(allchats))
+        console.log(chats);
+      });
+    });       
+    }
   }
 
   logout() {
@@ -110,8 +102,6 @@ class Home extends Component {
 
   submitEditProfile(e) {
     e.preventDefault();
-    console.log("imhere", this.state.firstName, this.state.lastName);
-
     if (this.state.firstName != "" && this.state.lastName != "") {
       user[0] = this.state.firstName;
       user[1] = this.state.lastName;
@@ -161,9 +151,6 @@ class Home extends Component {
     else {
       alert("Account was not updated.")
     }
-
-    console.log("userarray", user[0], user[1]);
-
     document.getElementById('lblfName').innerHTML = user[0];
     document.getElementById('lbllName').innerHTML = user[1];
 
@@ -221,8 +208,6 @@ class Home extends Component {
     document.getElementById('cancelEditButton').style.display = 'none';
     document.getElementById('submitPasswordButton').style.display = 'inline';
     document.getElementById('cancelPasswordButton').style.display = 'inline';
-
-    console.log(user[3], user[7]);
   }
 
   submitPassword(e) {
@@ -427,8 +412,6 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
     document.getElementById('otherAcctPage').style.display = "none";
-
-    console.log(user[3], user[7]);
   }
 
   // new msg button
@@ -440,7 +423,33 @@ class Home extends Component {
   }
 
   inboxMsgButton = () => {
+    document.getElementById("chatsStarted").innerHTML = "";
 
+    for (var c = 0; c < chats.length; c++) {
+      var html = "";
+      html += "<button id='" + c + "' onClick={openChat(e)}>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
+      document.getElementById("chatsStarted").innerHTML += html;
+
+      console.log(html);
+    }
+  }
+
+  openChat(e) {
+    console.log(e.target.id);
+    var chatname = chats[e.target.id];
+    console.log(chatname);
+    firebase.firestore().collection("chat/" + chatname + "/messages").onSnapshot((querySnapshot) => {
+          querySnapshot.docChanges().forEach((doc) => {
+            var message = doc.doc.data();
+            var html = "";
+            // give each message a unique ID
+            html += "<li id='message-" + snapshot.key + "'>";
+            html += message.from + ": " + message.text;
+            html += "</li>";
+
+            document.getElementById("messages").innerHTML += html;
+      });
+    });
   }
 
 render() {
@@ -478,10 +487,12 @@ render() {
           <div class="chat-title">
             <h1>SIMWorld Chat</h1>
           </div>
-          <div id='msgOption' >
+          <div id='msgOption'>
             <button id='inboxMsgButton' title="Inbox" onClick={ this.inboxMsgButton }>Inbox</button>
             <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
           </div>
+          <br/>
+          <div id='chatsStarted'></div>
           <br/>
           <div id='searchUser' style={{display: 'none'}}>
             <input id="selectUser" placeholder="Search user" autocomplete="off" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
