@@ -4,6 +4,21 @@ import firebase from './base';
 import 'firebase/firestore';
 import {user} from './Login';
 
+// var express = require('express');
+// var app = express();
+// var http = require('http');
+// var server = http.createServer(app);
+
+// app.use(express.bodyParser());
+// app.post('/', function (req, res) {
+//   console.log(req.body);
+//   res.send(200);
+
+//   openChat();
+// });
+
+// server.listen(process.env.PORT, process.env.IP);
+
 var unameArr = [];
 var allchats = [];
 var chats = [];
@@ -12,6 +27,7 @@ var clickedUser;
 
 class Home extends Component {
   constructor(props) {
+
     super(props);
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
@@ -19,7 +35,6 @@ class Home extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.searchUsername = this.searchUsername.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.openChat = this.openChat.bind(this);
     this.state = {
       firstName: '',
       lastName: '',
@@ -172,6 +187,8 @@ class Home extends Component {
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   cancelEditProfile() {
@@ -190,6 +207,11 @@ class Home extends Component {
     document.getElementById('cancelEditButton').style.display = 'none';
     document.getElementById('submitPasswordButton').style.display = 'none';
     document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   changePassword() {
@@ -208,6 +230,9 @@ class Home extends Component {
     document.getElementById('cancelEditButton').style.display = 'none';
     document.getElementById('submitPasswordButton').style.display = 'inline';
     document.getElementById('cancelPasswordButton').style.display = 'inline';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
   }
 
   submitPassword(e) {
@@ -238,6 +263,8 @@ class Home extends Component {
       document.getElementById('submitPasswordButton').style.display = 'none';
       document.getElementById('cancelPasswordButton').style.display = 'none';
 
+      document.getElementById('editfName').value = null;
+      document.getElementById('editlName').value = null;
       document.getElementById('editNewPassword').value = null;
       document.getElementById('confirmNewPassword').value = null;
     }
@@ -262,6 +289,11 @@ class Home extends Component {
     document.getElementById('cancelEditButton').style.display = 'none';
     document.getElementById('submitPasswordButton').style.display = 'none';
     document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   sendMessage(e) {
@@ -385,6 +417,30 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
     document.getElementById('otherAcctPage').style.display = "none";
+
+    document.getElementById('searchUser').style.display = "none";
+    document.getElementById('chatsStarted').style.display = "none";
+
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   // bookings page button
@@ -394,6 +450,30 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "none";
     document.getElementById('otherAcctPage').style.display = "none";
+
+    document.getElementById('searchUser').style.display = "none";
+    document.getElementById('chatsStarted').style.display = "none";
+
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   // messages page button
@@ -403,6 +483,30 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "block";
     document.getElementById('acctPage').style.display = "none";
     document.getElementById('otherAcctPage').style.display = "none";
+
+    document.getElementById('searchUser').style.display = "none";
+    document.getElementById('chatsStarted').style.display = "none";
+
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   // account page button
@@ -412,10 +516,35 @@ class Home extends Component {
     document.getElementById('msgsPage').style.display = "none";
     document.getElementById('acctPage').style.display = "block";
     document.getElementById('otherAcctPage').style.display = "none";
+
+    document.getElementById('searchUser').style.display = "none";
+    document.getElementById('chatsStarted').style.display = "none";
+
+    document.getElementById('tblProfile').style.display = 'block';
+    document.getElementById('tblPassword').style.display = 'none';
+
+    document.getElementById('lblfName').style.display = 'inline';
+    document.getElementById('lbllName').style.display = 'inline';
+
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'inline';
+    document.getElementById('changePasswordButton').style.display = 'inline';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+
+    document.getElementById('editfName').value = null;
+    document.getElementById('editlName').value = null;
+    document.getElementById('editNewPassword').value = null;
+    document.getElementById('confirmNewPassword').value = null;
   }
 
   // new msg button
   newMsgButton = () => {
+    document.getElementById('chatsStarted').style.display = "none";
     document.getElementById('searchUser').style.display = "block";
     document.getElementById('sendNewMessage').style.display = "none";
     this.state.to = '';
@@ -424,10 +553,12 @@ class Home extends Component {
 
   inboxMsgButton = () => {
     document.getElementById("chatsStarted").innerHTML = "";
+    document.getElementById('searchUser').style.display = "none";
+    document.getElementById('chatsStarted').style.display = "block";
 
     for (var c = 0; c < chats.length; c++) {
       var html = "";
-      html += "<button id='" + c + "' onClick={openChat(e)}>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
+      html += "<button id='" + c + "' onClick={this.openChat}>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
       document.getElementById("chatsStarted").innerHTML += html;
 
       console.log(html);
@@ -492,7 +623,8 @@ render() {
             <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
           </div>
           <br/>
-          <div id='chatsStarted'></div>
+          <div id='chatsStarted' style={{display: 'none'}}></div>
+          
           <br/>
           <div id='searchUser' style={{display: 'none'}}>
             <input id="selectUser" placeholder="Search user" autocomplete="off" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
@@ -524,7 +656,6 @@ render() {
       <div id='acctPage' style={{display: 'none'}}>
         <div>
           <h1>{user[2] + "'s Account"}</h1>
-          <br />
           <br />
           <table id='tblProfile'>
             <tr>
