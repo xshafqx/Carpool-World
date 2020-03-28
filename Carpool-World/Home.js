@@ -18,7 +18,7 @@ import {user} from './Login';
 // });
 
 // server.listen(process.env.PORT, process.env.IP);
-var Util = require('./profilePageReset');
+var Util = require('./Util');
 var unameArr = [];
 var allchats = [];
 var chats = [];
