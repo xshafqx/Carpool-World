@@ -18,7 +18,7 @@ import {user} from './Login';
 // });
 
 // server.listen(process.env.PORT, process.env.IP);
-
+var Util = require('./profilePageReset');
 var unameArr = [];
 var allchats = [];
 var chats = [];
@@ -169,21 +169,7 @@ class Home extends Component {
     document.getElementById('lblfName').innerHTML = user[0];
     document.getElementById('lbllName').innerHTML = user[1];
 
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -192,21 +178,7 @@ class Home extends Component {
   }
 
   cancelEditProfile() {
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -247,21 +219,7 @@ class Home extends Component {
         alert(error);
       });
 
-      document.getElementById('tblProfile').style.display = 'block';
-      document.getElementById('tblPassword').style.display = 'none';
-
-      document.getElementById('lblfName').style.display = 'inline';
-      document.getElementById('lbllName').style.display = 'inline';
-
-      document.getElementById('editfName').style.display = 'none';
-      document.getElementById('editlName').style.display = 'none';
-
-      document.getElementById('editButton').style.display = 'inline';
-      document.getElementById('changePasswordButton').style.display = 'inline';
-      document.getElementById('submitEditButton').style.display = 'none';
-      document.getElementById('cancelEditButton').style.display = 'none';
-      document.getElementById('submitPasswordButton').style.display = 'none';
-      document.getElementById('cancelPasswordButton').style.display = 'none';
+      Util.profilePageReset();
 
       document.getElementById('editfName').value = null;
       document.getElementById('editlName').value = null;
@@ -274,21 +232,7 @@ class Home extends Component {
   }
 
   cancelPassword() {
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -421,21 +365,7 @@ class Home extends Component {
     document.getElementById('searchUser').style.display = "none";
     document.getElementById('chatsStarted').style.display = "none";
 
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -454,21 +384,7 @@ class Home extends Component {
     document.getElementById('searchUser').style.display = "none";
     document.getElementById('chatsStarted').style.display = "none";
 
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -487,21 +403,7 @@ class Home extends Component {
     document.getElementById('searchUser').style.display = "none";
     document.getElementById('chatsStarted').style.display = "none";
 
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
@@ -520,21 +422,7 @@ class Home extends Component {
     document.getElementById('searchUser').style.display = "none";
     document.getElementById('chatsStarted').style.display = "none";
 
-    document.getElementById('tblProfile').style.display = 'block';
-    document.getElementById('tblPassword').style.display = 'none';
-
-    document.getElementById('lblfName').style.display = 'inline';
-    document.getElementById('lbllName').style.display = 'inline';
-
-    document.getElementById('editfName').style.display = 'none';
-    document.getElementById('editlName').style.display = 'none';
-
-    document.getElementById('editButton').style.display = 'inline';
-    document.getElementById('changePasswordButton').style.display = 'inline';
-    document.getElementById('submitEditButton').style.display = 'none';
-    document.getElementById('cancelEditButton').style.display = 'none';
-    document.getElementById('submitPasswordButton').style.display = 'none';
-    document.getElementById('cancelPasswordButton').style.display = 'none';
+    Util.profilePageReset();
 
     document.getElementById('editfName').value = null;
     document.getElementById('editlName').value = null;
