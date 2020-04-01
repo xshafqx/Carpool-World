@@ -60,7 +60,7 @@ To switch branch :
 
 In-Progress | Done
 ----------- | -----------
-Retrieving chats [Shafiq doing now] | Connected to Firebase 
+Create a booking [Shafiq doing now] | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Choose the driver and rider | Synced database to Firebase 
 Cancel confirmed ride | Logging in of SIMRide 
@@ -74,7 +74,7 @@ Weekly pickup scheduler | Live chat, store chat, select user to chat with
 Automatic route planning (fastest) | View other profiles 
 *Balance low reminder | Update password - Account management
 Audit/log | Stored chat history 
-Connect APIs | -
+Connect APIs | Retrieving chats
 Stripe API | -
 eNETS Open API | -
 MapQuest Directions API | -
